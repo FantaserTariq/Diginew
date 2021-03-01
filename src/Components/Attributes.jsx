@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from "axios"
 import { Link } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faAngleDown, faQuestionCircle, faBook, faCamera, faMapMarkerAlt, faCoffee, faSearch, faSearchPlus, faUserCircle, faComment, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -37,7 +38,8 @@ class Attributes extends React.Component {
             description: "",
             price: "",
             btndisabled:true,
-            last:false
+            last:false,
+            isLoggedin:localStorage.getItem("token")
         }
         this.handleChange = this
             .handleChange
@@ -133,8 +135,43 @@ class Attributes extends React.Component {
                 description,
                 price
             }
+
+
             this.props.set_seller_data(selldata);
-            alert(`${firebase.auth().currentUser.displayName} You have successfully submitted.Please Click Next`)
+            //alert(`${firebase.auth().currentUser.displayName} You have successfully submitted.Please Click Next`)
+            
+            
+    var apiBaseUrl = "http://localhost:5000/products/"
+    var self = this;
+    var payload={
+        "user":selldata.SellerId,
+        "title":selldata.title,        
+        "image":selldata.url,
+        "category":selldata.Category   ,
+        "subCategory":selldata.SubCategory,
+        "description":selldata.description,
+        "price":selldata.price,
+        "productLocation":selldata.productLocation,    
+        "itemcCondition":selldata.itemCondition,
+    
+
+    }
+    axios.post(apiBaseUrl+'addproduct', payload)
+    .then(function (response) {
+    console.log(response);
+    if(response.data.code == 200){
+    console.log("Login successfull");
+    }
+   
+    else{
+    console.log(response.data.error);
+    alert(response.data.error);
+    }
+    })
+    .catch(function (error) {
+    console.log(error);
+    });
+    
             this.setState({
                 SellData: selldata,
                 btndisabled:false,
@@ -172,7 +209,7 @@ class Attributes extends React.Component {
         return (
             <div>
                 {
-                    (this.props.USER_AUTH_DATA.isSignedIn)
+                    (this.state.isLoggedin)
                         ?
                         (
                             <div>
@@ -281,18 +318,18 @@ class Attributes extends React.Component {
 
                                     <div style={{ display: "flex" }}>
 
-                                        <img id="userphoto" src={firebase.auth().currentUser.photoURL} alt="This is your image" />
+                                        {/* <img id="userphoto" src={firebase.auth().currentUser.photoURL} alt="This is your image" /> */}
 
                                         <label className="text-info" style={{ marginLeft: "5%" }} htmlFor="rid">
                                             Name:
-                             <input clas="gettedname" value={firebase.auth().currentUser.displayName} className="text-dark form-control" type="text" />
+                             {/* <input clas="gettedname" value={firebase.auth().currentUser.displayName} className="text-dark form-control" type="text" /> */}
                                         </label>
 
                                     </div>
 
                                     <br />
                                     <br />
-                                    <h6 className="text-info">{firebase.auth().currentUser.displayName} please agree to the terms to proceed</h6>
+                                    {/* <h6 className="text-info">{firebase.auth().currentUser.displayName} please agree to the terms to proceed</h6> */}
 
                                     <button onClick={this.checkAlldata} className="btn btn-success">I agree to the terms and conditions</button>
 
@@ -300,7 +337,7 @@ class Attributes extends React.Component {
                                     ?(
  
                                         <div>
-                                        <h6 className="text-info">{firebase.auth().currentUser.displayName} Only One Step more(PhoneAuth) please click Next to continue *</h6>
+                                        {/* <h6 className="text-info">{firebase.auth().currentUser.displayName} Only One Step more(PhoneAuth) please click Next to continue *</h6> */}
                                         <br/>
                                         <Link to="/phoneauth" onClick={this.move} style={{ fontSize: "20px" }} className="btn btn-dark btn-lg" to="/phoneauth">Move Next</Link>
                                         </div>

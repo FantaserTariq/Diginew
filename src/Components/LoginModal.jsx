@@ -25,7 +25,7 @@ import '../Styling/Home.css'
 import Header from "./Header"
 import Categories from './Categories'
 
-class Login extends React.Component {
+class Loginn extends React.Component {
     constructor() {
         super()
         this.state = {
@@ -180,4 +180,4 @@ const mapDispatchToProp = (dispatch) => ({
     set_data: (data) => dispatch(set_data(data))
 })
 //updating the data of the state
-export default connect(mapStateToProps, mapDispatchToProp)(Login);
+export default connect(mapStateToProps, mapDispatchToProp)(Loginn);

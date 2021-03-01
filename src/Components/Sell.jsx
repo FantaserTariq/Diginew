@@ -23,23 +23,49 @@ class Sell extends React.Component {
         this.state = {
             category: "",
             SellData: {},
-            condition: false
+            condition: false,
+            isLoggedin:localStorage.getItem("token"),
+            userdetails:[]
         }
     }
 
-    handleClick = (c,event) => {
+    componentDidMount() {
+        if(localStorage.getItem('token')){
+            var token= localStorage.getItem('token');
+            if (token) 
+            { var base64Url = token.split('.')[1]; 
+          var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); 
+          var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) { return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2); }).join('')); 
+          console.log(JSON.parse(jsonPayload),"daasdasdas")
+          var tempor=JSON.parse(jsonPayload);
+          console.log("f",tempor)
+            this.setState({userdetails:tempor},() => {
+                console.log(this.state.userdetails, 'dealersOverallTotal1');
+              });
+            if(this.state.userdetails){
+            console.log(this.state.userdetails,"user details");
+            }
+        }
+            }
+    }
+
+    handleClick = async(c,event) => {
+       await this.componentDidMount();
+       console.log(this.state.userdetails,"user details now");
         alert(event.target.innerText);
         //////////////////////////////////////////////
-        let name = firebase.auth().currentUser.displayName;
-        let email = firebase.auth().currentUser.email;
-        let photo = firebase.auth().currentUser.photoURL;
+        let name = this.state.userdetails.name;
+        let email = this.state.userdetails.email;
+        let id=this.state.userdetails.id;
+        // let photo = firebase.auth().currentUser.photoURL;
         let category=c;
         let subCategory=event.target.innerText;
 
         let Selldata = {
             SellerName: name,
             SellerEmail: email,
-            SellerPhoto: photo,
+            SellerId:id,
+            // SellerPhoto: photo,
             Category: category,
             SubCategory:subCategory
         }
@@ -60,7 +86,7 @@ class Sell extends React.Component {
         return (
             <div>
                 {
-                    (this.props.USER_AUTH_DATA.isSignedIn)
+                    (this.state.isLoggedin)
                         ?
                         (
                             <div>

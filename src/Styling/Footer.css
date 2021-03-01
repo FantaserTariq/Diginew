@@ -1,11 +1,12 @@
 #links{
+    margin-top: 10px;
     display: flex;
-    margin-left: 0%;
+    
     background-color:#ebeeef;
     border-top: 1px solid rgb(46, 42, 42);
 }
 ul{
-    margin-left: 4%;
+    margin-left: 7%;
     list-style: none;
     margin-top:2%;
 }

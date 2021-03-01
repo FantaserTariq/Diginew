@@ -1,3 +1,8 @@
+#categories{
+    margin-left: 200px;
+
+}
+
 /* ul
 {
     width: 100%;
@@ -15,6 +20,7 @@
 .bigDiv p Link{
     color: black;
     text-decoration: none;
+    line-height: 0%;
 }
 #allitems{
     width:95%;

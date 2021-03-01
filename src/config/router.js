@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch, withRouter } from "react-router
 
 import Header from '../Components/Header.jsx'
 import About from '../Components/About.jsx'
-import Login from '../Components/LoginModal'
+// import Login from '../Components/LoginModal'
 import Chat from '../Components/Chat'
 import Order from '../Components/Order'
 import Home from '../Components/Home'
@@ -15,6 +15,9 @@ import AdDetails from '../Components/AdDetails'
 import MyAds from '../Components/MyAds'
 import Types from '../Components/Types'
 import Footer from '../Components/Footer'
+import Signup from '../Components/Signup'
+import Login from '../Components/Login'
+import RiderSignup from '../Components/RiderSignUp'
 
 class AppRouter extends React.Component {
     render() {
@@ -23,7 +26,7 @@ class AppRouter extends React.Component {
 
                   <Router>
                       <Route exact path="/" component={Home} />
-                      <Route exact path="/login" component={Login} />
+                      <Route exact path="/Login" component={Login} />
                       <Route exact path="/chat" component={Chat} />
                       <Route exact path="/order" component={Order} />
                       <Route exact path="/sell" component={Sell} />
@@ -34,6 +37,8 @@ class AppRouter extends React.Component {
                       <Route exact path="/myads" component={MyAds} />
                       <Route exact path="/types" component={Types} />
                       <Route exact path="/footer" component={Footer} />
+                      <Route exact path="/Signup" component={Signup} />
+                      <Route exact path="/RiderSignup" component={RiderSignup} />
                      
                   </Router>
 

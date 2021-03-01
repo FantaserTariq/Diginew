@@ -1,0 +1,28 @@
+.navbar{
+    text-align: center;
+}
+
+.header-class{
+    margin-left: 300px;
+}
+
+.input{
+    
+    width: 500px;
+}
+
+
+
+.btn-lg{
+    padding: 0.5rem 32px;
+    font-size: 19px;
+    line-height: 1.5;
+    border-radius: 16px 16px 16px 16px;
+
+}
+
+@media all and (max-width:1000px){
+    .header-class{
+        margin-left: 150px;
+    }
+}

@@ -11,7 +11,7 @@ class Footer extends React.Component {
     render() {
         return (
             <div style={{position: "relative", bottom: "0px",width:"100%"}}>
-                <div id="foot1" style={{backgroundColor: "#ebeeef", width: "100%" }}>
+                {/* <div id="foot1" style={{backgroundColor: "#ebeeef", width: "100%" }}>
                     <div style={{ display: "flex" }}>
                         <img style={{ marginLeft: "10%" }} src="https://statics.olx.com.pk/external/base/img/phone-app.webp" alt="OLX Footer Image" />
                         <div style={{ width: "30%", marginTop: "10px",marginLeft:"2%"}}>
@@ -24,7 +24,7 @@ class Footer extends React.Component {
                         </div>
 
                     </div>
-                </div>
+                </div> */}
 
                 <div id="links">
                     

@@ -36,18 +36,27 @@ class HomePage extends React.Component {
                     {/* <button onClick={this.deleteAll} className="btn btn-danger btn-block">DELETE ALL THE DATA</button> */}
                     <Header />
                 </div>
-                <div style={{ position: "relative" }} id="structure">
+                <div style={{ position: "relative", display: "block" }} id="structure">
                     <Categories />
+                    
                     <hr />
+                    <div className="image">
                     <img className=".container-fluid" id="frontPic" src={frontPic} alt="This is the front pic of olx" />
+                    </div>
 
+                   
+                    <div className="Featured_Ads" style={{marginLeft: "270px", marginTop: "20px"}}>
+                            <h4>Featured Ads</h4>
+                        </div>
                      {(this.props.currentCondition==true)?(
-                        <ul style={{ position: "relative", marginTop: "5%" }}>
+                        <ul style={{ position: "relative", marginTop: "2%" }}>
 {/* This is another thing will be called later */}
                         
                         {this.props.users_ads.map((v, i) => {
                             return <li id="mosti" key={i}>
+                                
                                 <div style={{ display: "inline-block" }}>
+                                    
                                     {/* {console.log("key==>",i)} */}
                                      
                                     <Ads

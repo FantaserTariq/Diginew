@@ -3,35 +3,43 @@
     width: 100%;
  }
 #image{
-    min-width: 700px;
-    max-width: 700px;
-    min-height: 650px;
-    max-height:650px;
+    width: 100%;
+    height: 56%;
+    text-align: center;
     padding-left: 2%;
-    border:1px solid skyblue;
+    border: 1px solid #afb5b7;
     border-radius: 1%;
+    margin-left: 350px;
+   
 }
 #pricedaba{
-    border: 1px solid black;
-    width: 80%;
+    border: 1px solid #afb5b7;
+    width: 50%;
     height: 180px;
     border-radius: 1.5%;
-    margin-left: 20px;
+    margin-left: 220px;
+  
 }
 #sellerdaba{
-    border: 1px solid black;
-    width: 80%;
-    height: auto;
-    margin-top: 20px;
+    border: 1px solid #afb5b7;
+    width: 50%;
+    height: 266px;
     border-radius: 1.5%;
-    margin-left: 20px;
+    margin-left: 220px;
+    margin-top: 10px;
 }
 #disc{
-    width: 60%;
+    width: 61%;
     padding-left: 2%;
-    border:1px solid black;
-    border-radius: 1%;
+    border: 1px solid #afb5b7;
+    border-radius: 4px;
+    margin-left: 349px;
+    margin-right: 157px;
+    margin-top: -320px;
+    margin-bottom: 20px;
 }
+
+
 .setMargin{
     margin-left: 4%;
 }
@@ -60,7 +68,7 @@
     #pricedaba{
         border: 1px solid black;
         width: 100%;
-        height: 180px;
+        height: 150px;
         border-radius: 1.5%;
         margin-left: 0px;
     }
@@ -102,3 +110,4 @@
         margin-left: 20px;
     }
 }
+
