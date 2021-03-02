@@ -42,5 +42,44 @@ router.post("/addproduct", (req, res) => {
      
 });
 
+router.get("/getAllProducts",
+    /*   
+    passport.authenticate("jwt", {
+            session: false
+        }),
+        */
+    (req, res) => {
+        Product.find()
+            .then(cit => {
+                if (!cit) {
+
+                    return res.status(404).json(errors);
+                }
+                console.log(cit.title);
+                res.json(cit);
+            })
+            .catch(err => res.status(404).json({
+                cit: 'There are no products'
+            }));
+
+    });
+
+    router.get("/getProducts/:id",
+    /*passport.authenticate("jwt", {
+        session: false
+    }),*/
+    (req, res) => {
+        console.log(req.param.id)
+        Product.findOne({ '_id': (req.params.id) })
+            .then(cit => res.json(cit))
+            .catch(err =>
+                res.status(404).json({
+                    error: "no Product Found"
+                })
+            );
+    });
+
+
+
 
 module.exports = router;

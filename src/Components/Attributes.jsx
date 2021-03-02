@@ -126,6 +126,8 @@ class Attributes extends React.Component {
         let description = this.state.description;
         let price = this.state.price;
 
+        let temp=this.props.SELLER_DATA;
+        console.log("f",temp)
 
         if (this.state.check1 === true && this.state.check2 === true && this.state.check3 === true && this.state.check4 === true && this.state.check5===true && this.state.check6===true) {
             let data = this.props.SELLER_DATA;
@@ -179,7 +181,7 @@ class Attributes extends React.Component {
             });
         }
         else{
-            alert(`${firebase.auth().currentUser.displayName} Please check all the fields to continue`);
+            alert(temp.SellerName +` Please check all the fields to continue`);
         }
         //console.log(url);
     }

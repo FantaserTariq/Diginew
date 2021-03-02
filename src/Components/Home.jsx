@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from "axios";
 import { get_seller_all_data } from '.././store/action/index'
 import Categories from './Categories'
 import { connect } from "react-redux"
@@ -16,10 +17,63 @@ class HomePage extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            userads:[]
       
         }
     }
-    componentDidMount() {
+   async getdata(){
+        var apiBaseUrl = "http://localhost:5000/products/";
+        var self = this;
+        let temper
+      return await axios.get(apiBaseUrl+'getAllProducts')
+        // .then(async function (response) {
+        // console.log(response);
+        
+        // if(response.data){
+        //     console.log("sadsadsd",response.data);
+           
+        //     var a=await this.seting(response.data);
+            
+        //     temper=response.data;
+        //     return (temper);
+        // }
+       
+        // if(response.data.code == 200){
+        // console.log("Login successfull");
+        // }
+       
+        // else{
+        // console.log(response.data.error);
+        // alert(response.data.error);
+        // }
+        // })
+        // .catch(function (error) {
+        // console.log(error);
+        // });
+        // console.log("temper",temper);
+        // if(temper){
+        //     this.setState({userads:"ghghhhj"},() => {
+        //         console.log(this.state.userads, 'dealersOverallTotal1');
+        //       });
+        // }
+        
+    }
+    seting(inp){
+        console.log(inp,"in set")
+        this.setState({userads:inp.data},()=>{
+            console.log("yoyo",this.state.userads)
+        })
+    }
+   async componentDidMount() {
+      
+        console.log("here")
+        let tempor=await this.getdata();
+        console.log("csac",tempor);
+        var a=await this.seting(tempor);
+        
+        
+   
+   
         this.props.get_seller_all_data();
     }
     deleteAll = () => {
@@ -28,7 +82,7 @@ class HomePage extends React.Component {
         userRef.remove();
     }
     render() {
-        console.log("firebase sales data", this.props.users_ads)
+        console.log("firebase sales data", this.state.userads)
         console.log("Search ads props data is===>",this.props.search_ads)
         return (
             <div className="home-page">
@@ -52,7 +106,7 @@ class HomePage extends React.Component {
                         <ul style={{ position: "relative", marginTop: "2%" }}>
 {/* This is another thing will be called later */}
                         
-                        {this.props.users_ads.map((v, i) => {
+                        {this.state.userads.map((v, i) => {
                             return <li id="mosti" key={i}>
                                 
                                 <div style={{ display: "inline-block" }}>
@@ -60,8 +114,8 @@ class HomePage extends React.Component {
                                     {/* {console.log("key==>",i)} */}
                                      
                                     <Ads
-                                        index={i}
-                                        url={v.url}
+                                        index={v._id}
+                                        url={v.image}
                                         email={v.SellerEmail}
                                         phone={v.mobilePhone}
                                         title={v.title}
@@ -93,8 +147,8 @@ class HomePage extends React.Component {
                                     {/* {console.log("key==>",i)} */}
                                      
                                     <Ads
-                                        index={i}
-                                        url={v.url}
+                                        index={v._id}
+                                        url={v.image}
                                         email={v.SellerEmail}
                                         phone={v.mobilePhone}
                                         title={v.title}

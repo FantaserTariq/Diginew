@@ -21,7 +21,7 @@ router.get("/test", (req, res) =>
 router.post("/signup", (req, res) => {
     console.log("sdsa",req.body)
     Rider.findOne({
-        Email: req.body.email
+        email: req.body.email
     }).then(rider => {
         if (rider) {
             //errors.username = "username already exists";
@@ -31,28 +31,24 @@ router.post("/signup", (req, res) => {
 
             console.log(req.body);
             const newRider = new Rider({
+                
                 firstName:req.body.firstname,
                 lastName:req.body.lastname,
-                Email:req.body.email,
+                email:req.body.email,
                 phone:req.body.phone,
-                Password:req.body.password,
-                driverLicenseNumber:req.body.driverLicenseNumber,
+                password:req.body.password,
+                drivingLicenseNumber:req.body.drivingLicenseNumber,
                 vehicleName: req.body.vehicleName,
                 vehicleNumber: req.body.vehicleNumber,
                 vehicleWeight: req.body.vehicleWeight,
                 vehicleType: req.body.vehicleType,
-                
-                
-                
-                
-
             });
             //console.log(newRider.perm);
 
             bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(newRider.Password, salt, (err, hash) => {
+                bcrypt.hash(newRider.password, salt, (err, hash) => {
                     if (err) throw err;
-                    newRider.Password = hash;
+                    newRider.password = hash;
                     newRider
                         .save()
                         .then(rider => res.json(rider))
@@ -60,6 +56,8 @@ router.post("/signup", (req, res) => {
                 });
             });
         }
+    }).catch(err=>{
+        console.log(err);
     });
 });
 

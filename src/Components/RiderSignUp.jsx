@@ -45,7 +45,7 @@ class RiderSignup extends React.Component {
       var apiBaseUrl = "http://localhost:5000/rider/";
       var self = this;
       var payload = {
-        "driverId": this.state.driver_id,
+        
         "firstname": this.state.first_name,
         "lastname": this.state.last_name,
         "phone": this.state.phone,
@@ -55,6 +55,7 @@ class RiderSignup extends React.Component {
         "vehicleNumber": this.state.vehicleNumber,
         "vehicleWeight": this.state.vehicleWeight,
         "vehicleName": this.state.vehicleName,
+        "vehicleType": this.state.vehicleType,
       };
       axios
         .post(apiBaseUrl + "signup", payload)
@@ -62,17 +63,15 @@ class RiderSignup extends React.Component {
           console.log(response);
           if (response.data.code == 200) {
             console.log("Login successfull");
-          } else if (response.data.code == 204) {
-            console.log("Username password do not match");
-            alert("username password do not match");
-          } else {
-            console.log("Username does not exists");
-            alert("Username does not exist");
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+          } else{
+            console.log(response.data.error);
+            alert(response.data.error);
+            }
+            })
+            .catch(function (error) {
+            console.log(error);
+            });
+            
     }
   };
   render() {
@@ -143,7 +142,7 @@ class RiderSignup extends React.Component {
                 <div className="form-group">
                   <label>Phone Number</label>
                   <input
-                    type="tel"
+                    type="text"
                     className="form-control"
                     placeholder="Enter Phone Number"
                     onChange={(e) => this.setState({ phone: e.target.value })}

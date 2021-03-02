@@ -2,10 +2,7 @@ const mongoose = require("mongoose")
 
 const riderSchema = mongoose.Schema(
     {
-        driverId: {
-            type: Number,
-            requried: true,
-        },
+       
         firstName: {
             type: String,
             required: true,

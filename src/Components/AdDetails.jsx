@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios"
 import { get_seller_all_data } from ".././store/action/index";
 import Categories from "./Categories";
 import { connect } from "react-redux";
@@ -20,13 +21,94 @@ class AdDetails extends React.Component {
     this.state = {
       key: "",
       path: Location,
+      productDetail:{},
+      userdetails:[],
     };
   }
+
+  async componentDidMount() {
+
+    
+    
+      if(localStorage.getItem('token')){
+          var token= localStorage.getItem('token');
+          if (token) 
+          { var base64Url = token.split('.')[1]; 
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); 
+        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) { return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2); }).join('')); 
+        console.log(JSON.parse(jsonPayload),"daasdasdas")
+        var tempor=JSON.parse(jsonPayload);
+        console.log("f",tempor)
+          this.setState({userdetails:tempor},() => {
+              console.log(this.state.userdetails, 'dealersOverallTotal1');
+            });
+          if(this.state.userdetails){
+          console.log(this.state.userdetails,"user details");
+          }
+      }
+          }
+  
+      
+    console.log("here")
+    console.log(this.props.SET_KEY)
+    console.log(this.props.USER_AUTH_DATA)
+    console.log(this.state.key)
+    let temp;
+    await this.getdata().then(data=>{
+      temp=data.data;
+    });
+    console.log(temp,"we")
+    this.setState({productDetail:temp},()=>{
+      console.log("fasds",this.state.productDetail);
+    })
+    
+}
+
+handleClick = async(c,event) => {
+  await this.componentDidMount();
+  console.log(this.state.userdetails,"user details now");
+   alert(event.target.innerText);
+   //////////////////////////////////////////////
+   let name = this.state.userdetails.name;
+   let email = this.state.userdetails.email;
+   let id=this.state.userdetails.id;
+   // let photo = firebase.auth().currentUser.photoURL;
+   let category=c;
+   let subCategory=event.target.innerText;
+
+   let Selldata = {
+       SellerName: name,
+       SellerEmail: email,
+       SellerId:id,
+       // SellerPhoto: photo,
+       Category: category,
+       SubCategory:subCategory
+   }
+   console.log("Inside==>", this.state.SellData)
+   this.props.set_seller_data(Selldata)
+   this.setState({
+       SellData: Selldata,
+       condition: true
+   })
+   //////////////////////////////////////////////
+   
+}
+async getdata(){
+  var apiBaseUrl = "http://localhost:5000/products/";
+  var self = this;
+  let temper
+  console.log("this.prop",this.props.SET_KEY);
+return await axios.get(apiBaseUrl+'getProducts/'+this.props.SET_KEY)
+}
+
   render() {
+
+
+
     console.log(this.props.SET_KEY);
     console.log(
       "firebase sales data in AdDetails",
-      this.props.users_ads[this.props.SET_KEY]
+      this.state.productDetail
     );
     return (
       <div>
@@ -41,8 +123,8 @@ class AdDetails extends React.Component {
             style={{ borderRadius: "1%", marginLeft: "320px", marginTop: "3%" }}
           >
             <h6 className="text-dark">
-              Home / {this.props.users_ads[this.props.SET_KEY].Category}/
-              {this.props.users_ads[this.props.SET_KEY].SubCategory}
+              Home / {this.state.productDetail.category}/
+              {this.state.productDetail.subCategory}
             </h6>
           </div>
           <br />
@@ -52,7 +134,7 @@ class AdDetails extends React.Component {
             <div style={{width: "800px", height: "800px", marginRight: "150px"}}>
             <img
               id="image"
-              src={this.props.users_ads[this.props.SET_KEY].url}
+              src={this.state.productDetail.image}
               alt=""
             />
             </div>
@@ -67,10 +149,10 @@ class AdDetails extends React.Component {
                 <div className="setMargin" style={{marginTop: "15px"}}>
                   <h2 style={{fontSize: "23px"}, {fontWeight: "bold"}} className="text-dark">
                     {" "}
-                    Rs {this.props.users_ads[this.props.SET_KEY].price}
+                    Rs {this.state.productDetail.price}
                   </h2>
                   <span className="text-secondary" style={{ fontSize: "18px" }}>
-                    {this.props.users_ads[this.props.SET_KEY].title}
+                    {this.state.productDetail.title}
                   </span>
                   <br />
                   <div style={{ display: "flex" }}>
@@ -78,7 +160,7 @@ class AdDetails extends React.Component {
                       className="text-secondary"
                       style={{ fontSize: "15px", marginTop: "25px" }}
                     >
-                      {this.props.users_ads[this.props.SET_KEY].selectLocation}
+                      {this.state.productDetail.selectLocation}
                     </p>
                     <p
                       className="text-secondary text-right"
@@ -88,7 +170,7 @@ class AdDetails extends React.Component {
                         marginLeft: "50px",
                       }}
                     >
-                      {this.props.users_ads[this.props.SET_KEY].dateTime}
+                      {this.state.productDetail.dateTime}
                     </p>
                   </div>
                 </div>
@@ -107,7 +189,7 @@ class AdDetails extends React.Component {
                         width: "35px",
                         height: "35px",
                       }}
-                      src={this.props.users_ads[this.props.SET_KEY].SellerPhoto}
+                      src={this.state.productDetail.SellerPhoto}
                       alt=""
                     />
                     <p
@@ -118,7 +200,7 @@ class AdDetails extends React.Component {
                         marginTop: "16px",
                       }}
                     >
-                      {this.props.users_ads[this.props.SET_KEY].SellerName}
+                      {this.state.productDetail.SellerName}
                     </p>
                   </div>
                 </div>
@@ -140,7 +222,7 @@ class AdDetails extends React.Component {
                 >
                   {" "}
                   <FiPhone style={{ fontSize: "23px" },{marginTop: "10px"},{marginRight: "10px"}} />{" "}
-                  {this.props.users_ads[this.props.SET_KEY].mobilePhone}
+                  {this.state.productDetail.mobilePhone}
                 </h6>
                 <div style={{ display: "flex" }}>
                 <h4 style={{ marginLeft: "10px" }} className="text-dark">
@@ -154,7 +236,7 @@ class AdDetails extends React.Component {
                       marginTop: "2.5%",
                     }}
                   >
-                    {this.props.users_ads[this.props.SET_KEY].selectLocation}
+                    {this.state.productDetail.selectLocation}
                   </p>
                 </div>
               </div>
@@ -170,7 +252,7 @@ class AdDetails extends React.Component {
                             <h3 style={{fontSize: "20px"},{fontWeight: "300"},{color: "color: #002f34"}} className="text-dark">Details :</h3>
                             <div style={{ display: "flex" }}>
                                 <p style={{ marginLeft: "2%", fontWeight: "bolder" }} className="text-secondary">Condition</p>
-                                <p className="text-dark" style={{ fontSize: "15px", marginLeft: "25%" }}>{this.props.users_ads[this.props.SET_KEY].itemCondition}</p>
+                                <p className="text-dark" style={{ fontSize: "15px", marginLeft: "25%" }}>{this.state.productDetail.itemCondition}</p>
                             </div>
                         </div>
                         <hr />
@@ -178,7 +260,7 @@ class AdDetails extends React.Component {
                         <h3 style={{fontSize: "20px"},{fontWeight: "300"},{color: "color: #002f34"}} className="text-dark">Description :</h3>
                             
                           
-                                <p className="text-dark" style={{ fontSize: "15px", marginLeft: "2%" }}>{this.props.users_ads[this.props.SET_KEY].description}</p>
+                                <p className="text-dark" style={{ fontSize: "15px", marginLeft: "2%" }}>{this.state.productDetail.description}</p>
                             
                         </div>
                     </div>
@@ -190,10 +272,15 @@ class AdDetails extends React.Component {
   }
 }
 const mapStateToProps = (state) => ({
+ 
   SET_KEY: state.app.SET_KEY,
   USER_AUTH_DATA: state.auth.USER,
   users_ads: state.app.GET_SELL,
-});
+
+  
+}
+
+);
 //updating the data of the state
 // const mapDispatchToProp = (dispatch) => ({
 //     setCurrentKey: (key) => setCurrentKey(key),
