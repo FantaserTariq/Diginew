@@ -10,7 +10,7 @@ import firebaseAuth from 'firebase/auth/dist/index.esm'
 
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
-import Slider from './OLXSlider'
+import Slider from './Slider'
 
 import { Button, Modal } from 'react-bootstrap'
 

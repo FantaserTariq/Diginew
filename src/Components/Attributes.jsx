@@ -6,7 +6,7 @@ import { faShoppingCart, faAngleDown, faQuestionCircle, faBook, faCamera, faMapM
 import { connect } from "react-redux"
 import { set_seller_data } from '../store/action/index'
 import Login from "./LoginModal"
-import logo from "../UI/OLXLogo.png";
+
 import { storage } from '../firebase';
 import "../Styling/Attributes.css";
 import { createBrowserHistory } from 'history';
@@ -219,7 +219,7 @@ class Attributes extends React.Component {
                                     <Link to="/sell/attribute">
                                         <FontAwesomeIcon style={{ fontSize: "25px", marginTop: "20px", marginLeft: "40px" }} icon={faArrowLeft} />
                                     </Link>
-                                    <img style={{ marginTop: "0px" }} id="logo" src={logo} alt="" />
+                                   
                                 </nav>
                                 <h3 className="text-center">Post Your Ad</h3>
                                 <div id="form">

@@ -18,6 +18,13 @@ import Footer from '../Components/Footer'
 import Signup from '../Components/Signup'
 import Login from '../Components/Login'
 import RiderSignup from '../Components/RiderSignUp'
+import NewHeader from '../Components/NewHeader'
+import NewSidebar from '../Components/NewSidebar'
+import Carousal from '../Components/Carousal'
+import OrderPage from "../Components/OrderPage.jsx";
+import FindRider from '../Components/FindRider'
+
+
 
 class AppRouter extends React.Component {
     render() {
@@ -39,6 +46,11 @@ class AppRouter extends React.Component {
                       <Route exact path="/footer" component={Footer} />
                       <Route exact path="/Signup" component={Signup} />
                       <Route exact path="/RiderSignup" component={RiderSignup} />
+                      <Route exact path="/NewHeader" component={NewHeader} />
+                      <Route exact path="/Carousal" component={Carousal} />
+                      <Route exact path="/OrderPage" component={OrderPage}/>
+                      <Route exact path="/FindRider" component={FindRider}/>
+                      
                      
                   </Router>
 

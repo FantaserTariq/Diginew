@@ -1,6 +1,6 @@
 import React from 'react';
 
-import logo from "../UI/OLXLogo.png";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark, faHeart, faShoppingCart, faAngleDown, faQuestionCircle, faBook, faCamera, faMapMarkerAlt, faCoffee, faSearch, faSearchPlus, faUserCircle, faComment } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom"

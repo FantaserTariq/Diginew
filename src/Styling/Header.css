@@ -1,5 +1,7 @@
 .navbar{
     text-align: center;
+    
+    background-color: cornflowerblue !important;
 }
 
 .header-class{
@@ -8,9 +10,13 @@
 
 .input{
     
-    width: 500px;
+    width: 300px;
 }
 
+.bg-light{
+
+    background-color: cornflowerblue !important;
+}
 
 
 .btn-lg{
@@ -18,11 +24,28 @@
     font-size: 19px;
     line-height: 1.5;
     border-radius: 16px 16px 16px 16px;
+  
 
 }
+
 
 @media all and (max-width:1000px){
     .header-class{
         margin-left: 150px;
     }
+}
+
+
+
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body{
+	font-family: 'Roboto', sans-serif;
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+i {
+	margin-right: 10px;
 }

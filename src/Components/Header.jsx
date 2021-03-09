@@ -1,6 +1,5 @@
 import React from "react";
 
-import logo from "../UI/OLXLogo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShoppingCart,
@@ -20,6 +19,7 @@ import { connect } from "react-redux";
 import Login from "./LoginModal";
 import { setSearchedData, showCondition } from "../store/action/index";
 import "../Styling/App.css";
+
 import firebase from "firebase/app";
 import firebaseAuth from "firebase/auth/dist/index.esm";
 import { ContactMail } from "@material-ui/icons";
@@ -32,9 +32,33 @@ class Header extends React.Component {
       selectLocation: "Punjab",
       search: "",
       condition: true,
+      isLoggedin:localStorage.getItem("token"),
+      userdetails:[],
     };
     //alert(this.props.search_ads)
   }
+
+
+
+  componentDidMount() {
+    if(localStorage.getItem('token')){
+        var token= localStorage.getItem('token');
+        if (token) 
+        { var base64Url = token.split('.')[1]; 
+      var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); 
+      var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) { return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2); }).join('')); 
+      console.log(JSON.parse(jsonPayload),"daasdasdas")
+      var tempor=JSON.parse(jsonPayload);
+      console.log("f",tempor)
+        this.setState({userdetails:tempor},() => {
+            console.log(this.state.userdetails, 'dealersOverallTotal1');
+          });
+        if(this.state.userdetails){
+        console.log(this.state.userdetails,"user details");
+        }
+    }
+        }
+}
   sign_out = () => {
     firebase.auth().signOut();
     window.location.reload();
@@ -181,11 +205,11 @@ class Header extends React.Component {
                   id="check"
                   className="row"
                 >
-                  {this.props.USER_AUTH_DATA.isSignedIn ? (
+                  {this.state.isLoggedin ? (
                     <img
                       style={{ borderRadius: "50%" }}
                       className="userico"
-                      src={firebase.auth().currentUser.photoURL}
+                      // src={firebase.auth().currentUser.photoURL}
                       alt="...."
                     />
                   ) : (
@@ -197,7 +221,7 @@ class Header extends React.Component {
                     </div>
                   )}
 
-                  {this.props.USER_AUTH_DATA.isSignedIn ? (
+                  {this.state.isLoggedin ? (
                     <div
                       style={{
                         fontWeight: "bolder",
@@ -208,7 +232,7 @@ class Header extends React.Component {
                       }}
                       className="col-xs-6"
                     >
-                      {firebase.auth().currentUser.displayName}
+                      {/* {firebase.auth().currentUser.displayName} */}
                     </div>
                   ) : (
                     <div
@@ -297,7 +321,7 @@ class Header extends React.Component {
               </li>
 
               <li className="nav-item">
-                {this.props.USER_AUTH_DATA.isSignedIn ? (
+                {this.state.isLoggedin ? (
                   //    This is the dropdown items
 
                   <div id="DropUser" className="dropdown">
@@ -322,7 +346,7 @@ class Header extends React.Component {
                           marginTop: "-4.4px",
                           marginLeft: "-5.5px",
                         }}
-                        src={firebase.auth().currentUser.photoURL}
+                        // src={firebase.auth().currentUser.photoURL}
                         alt=""
                       />
                       <FontAwesomeIcon
@@ -388,7 +412,7 @@ class Header extends React.Component {
                   </Link>
                   <br />
 
-                  {this.props.USER_AUTH_DATA.isSignedIn ? (
+                  {this.state.isLoggedin ? (
                     <div>
                       <div>
                         <button
@@ -415,7 +439,7 @@ class Header extends React.Component {
                 </div>
               </li>
               <li className="nav-item">
-                {this.props.USER_AUTH_DATA.isSignedIn ? (
+                {this.state.isLoggedin ? (
                   <Link id="fachat" className="inputDesktop" to="/chat">
                     {" "}
                     <FontAwesomeIcon
@@ -433,7 +457,7 @@ class Header extends React.Component {
                 )}
               </li>
               <li className="nav-item">
-                {this.props.USER_AUTH_DATA.isSignedIn ? (
+                {this.state.isLoggedin ? (
                   <Link
                     id="facart"
                     className="inputDesktop"
@@ -457,7 +481,7 @@ class Header extends React.Component {
                 )}
               </li>
               <li className="nav-item">
-                {this.props.USER_AUTH_DATA.isSignedIn ? (
+                {this.state.isLoggedin ? (
                   <Link to="/sell" id="sellbtn" className="btn btn-info">
                     SELL
                   </Link>
@@ -467,19 +491,32 @@ class Header extends React.Component {
                     <Link
                       id="sellbtn"
                       className=" btn btn-warning btn-lg"
-                      to="/login"
+                      to="/Signup"
                     >
-                      SELL
+                      Sign Up
                     </Link>
                     {/* <div className="btn btn-outline-dark btn-warning" style={{ marginLeft: "170%", marginTop: "2%" }}><Login /></div> */}
                   </div>
                 )}
               </li>
+
+              
             </ul>
           </div>
+
+
+
         </nav>
+
+
+       
+
         {/* This is bootstrap navigation bar */}
+
+
+  
       </div>
+      
     );
   }
 }

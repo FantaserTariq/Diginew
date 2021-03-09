@@ -12,6 +12,9 @@ import '../Styling/Header.css'
 import '../Styling/Home.css'
 import firebase from 'firebase/app';
 import firebaseAuth from 'firebase/auth/dist/index.esm'
+import NewHeader from './NewHeader';
+import NewSidebar from './NewSidebar';
+import Carousal from './Carousal'
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -85,13 +88,24 @@ class HomePage extends React.Component {
         console.log("firebase sales data", this.state.userads)
         console.log("Search ads props data is===>",this.props.search_ads)
         return (
+
+         
             <div className="home-page">
                 <div className="fixed-top" style={{ marginTop: "0px", width: "100%" }}>
                     {/* <button onClick={this.deleteAll} className="btn btn-danger btn-block">DELETE ALL THE DATA</button> */}
-                    <Header />
+                    <Header/>
+
+                    {/* <div className="side-bar">   <NewSidebar/></div> */}
+
+                 
                 </div>
                 <div style={{ position: "relative", display: "block" }} id="structure">
                     <Categories />
+{/* 
+                    <div className="carousal">
+                        <Carousal/>
+                    </div>
+                  */}
                     
                     <hr />
                     <div className="image">

@@ -2,6 +2,9 @@ import React from "react";
 import axios from "axios";
 import { Card, Container, Row, Col } from 'react-bootstrap';
 import "../Styling/Signup.css";
+import Header from "../Components/Header"
+import Categories from './Categories'
+import Footer from './Footer'
 
 class Signup extends React.Component {
 
@@ -69,13 +72,28 @@ class Signup extends React.Component {
 
     return (
 
+      <div className="home-page">
+                <div className="fixed-top" style={{ marginTop: "0px", width: "100%" }}>
+                  
+                    <Header/>
+
+             
+
+                 
+                </div>
+                
+                <div style={{ position: "relative", display: "block" }} id="structure">
+                    <Categories />
+                    </div>
+                    
 
 
 
 
 
-
+  
       <Container>
+      
           <Row>
           <div className="hello">
 
@@ -153,7 +171,7 @@ class Signup extends React.Component {
               Sign Up
             </button>
             <p className="forgot-password text-center" style={{marginRight: "50px"}} >
-              Already registered <a href="#">sign in?</a>
+              Already registered <a href="/Login">Sign in?</a>
             </p>
           </form>
           </Card>
@@ -162,6 +180,10 @@ class Signup extends React.Component {
         <Col></Col>
         </Row>
       </Container>
+      <div style={{ position: "relative", bottom: "0px" }}>
+                    <Footer />
+                </div>
+      </div>
     );
   }
 }

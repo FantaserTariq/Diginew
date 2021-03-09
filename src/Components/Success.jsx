@@ -9,6 +9,15 @@ import firebaseAuth from 'firebase/auth/dist/index.esm'
 import history from '../history'
 import { DesktopWindows } from "@material-ui/icons";
 class Success extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.state={
+          
+        
+          isLoggedin:localStorage.getItem("token"),
+        }
+      }
     go=()=>{
         firebase.auth().signOut();
         window.location.reload();
@@ -17,9 +26,9 @@ class Success extends React.Component {
     render() {
         return (
             <div>
-                {(this.props.USER_AUTH_DATA.isSignedIn) ? (
+                {(this.state.isLoggedin) ? (
                     <div>
-                        <h1 className="text-success" style={{ textAlign: "center", marginTop: "20vh" }}>Congratulation! {firebase.auth().currentUser.displayName}</h1>
+                        {/* <h1 className="text-success" style={{ textAlign: "center", marginTop: "20vh" }}>Congratulation! {firebase.auth().currentUser.displayName}</h1> */}
                         <h3 style={{ textAlign: "center", marginTop: "20vh" }} className="text-info">You are here because you have successfully posted your ad.Thanks for that</h3>
                         <div style={{ textAlign: "center", marginTop: "10vh" }}> <Link className="btn btn-primary btn-outline-warning btn-lg" to="/">Go to Home Page</Link> </div>
                     </div>

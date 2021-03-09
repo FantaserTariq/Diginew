@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Card, Container, Row, Col } from "react-bootstrap";
 import "../Styling/RiderSignup.css";
+import Header from "../Components/Header"
 
 class RiderSignup extends React.Component {
   constructor(props) {
@@ -76,7 +77,10 @@ class RiderSignup extends React.Component {
   };
   render() {
     return (
+
+   
       <Container>
+           <Header/>
         <Row>
           <div className="hello"></div>
         </Row>

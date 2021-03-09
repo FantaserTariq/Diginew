@@ -3,7 +3,7 @@ import React from 'react'
 import '../Styling/Sell.css'
 
 
-import logo from "../UI/OLXLogo.png";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faAngleDown, faQuestionCircle, faBook, faCamera, faMapMarkerAlt, faCoffee, faSearch, faSearchPlus, faUserCircle, faComment, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom"
@@ -94,7 +94,7 @@ class Sell extends React.Component {
                                     <Link to="/sell/attribute">
                                         <FontAwesomeIcon style={{ fontSize: "25px", marginTop: "20px", marginLeft: "40px" }} icon={faArrowLeft} />
                                     </Link>
-                                    <img style={{ marginTop: "0px" }} id="logo" src={logo} alt="" />
+                                    
                                     {
                                         (this.state.condition) ? (
                                             <Link to="/sell/attribute"><button style={{ marginRight: "20px", marginTop: "10px" }} className="btn-lg btn-success float-right">Next<FontAwesomeIcon style={{ fontSize: "25px", marginLeft: "10px" }} icon={faArrowRight} /></button></Link>
@@ -343,7 +343,7 @@ class Sell extends React.Component {
 
                                 <h1 className="text-center text-warning">Dear User Please Login to Sell your products</h1>
 
-                                <div className="text-center"><Link className="btn btn-primary btn-lg" to="/">Login</Link></div>
+                                <div className="text-center"><Link className="btn btn-primary btn-lg" to="/Login">Login</Link></div>
                             </div>
                         )
 

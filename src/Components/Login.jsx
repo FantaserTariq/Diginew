@@ -2,6 +2,19 @@ import React from "react";
 import axios from "axios";
 import { Card, Container, Row, Col } from 'react-bootstrap';
 import "../Styling/Login.css";
+import Header from "../Components/Header"
+import Categories from './Categories'
+import Footer from './Footer'
+import { Link} from "react-router-dom";
+import { FaWindows } from "react-icons/fa";
+import { Redirect } from 'react-router-dom';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useParams
+} from "react-router-dom"
 
 class Login extends React.Component {
 
@@ -14,7 +27,9 @@ class Login extends React.Component {
           password:'',
           user:'',
 
-          error:''
+          error:'',
+          redirect:true,
+          isLoggedin:localStorage.getItem("token"),
         }
       }
 
@@ -50,6 +65,7 @@ class Login extends React.Component {
     console.log(response);
     if(response.data.code == 200){
     console.log("Login successfull");
+    return <Redirect to='http://localhost:5001/Home' />
 
     
     
@@ -85,8 +101,24 @@ class Login extends React.Component {
 
     return (
 
+      <div>
+      {
+          (!this.state.isLoggedin)
+              ?
+              (
+<div className="home-page">
+                <div className="fixed-top" style={{ marginTop: "0px", width: "100%" }}>
+                  
+                    <Header/>
 
+             
 
+                 
+                </div>
+                
+                <div style={{ position: "relative", display: "block" }} id="structure">
+                    <Categories />
+                    </div>
 
 
 
@@ -161,6 +193,24 @@ class Login extends React.Component {
         <Col></Col>
         </Row>
       </Container>
+       <div style={{ position: "relative", bottom: "0px" }}>
+       <Footer />
+   </div>
+   </div>):(
+                            <div style={{ marginTop: "50vh" }}>
+
+                                <h1 className="text-center text-warning">You are already logged in</h1>
+                                <Route
+      path="/"
+      // render={({ match }) => {
+      //   // Do whatever you want with the match...
+      //   return <div />;
+      // }}
+    />
+                                <div className="text-center"><Link className="btn btn-primary btn-lg" to="/">Login</Link></div>
+                            </div>
+                        )}
+                        </div>
     );
   }
 }
