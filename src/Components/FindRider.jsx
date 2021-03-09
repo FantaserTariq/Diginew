@@ -18,7 +18,47 @@ import {
 
 class OrderPage extends React.Component {
 
-   
+   componentDidMount(){
+    
+    var apiBaseUrl = "http://localhost:5000/findrider/getActiveRiders";
+    
+    
+        console.log(apiBaseUrl);
+        axios.get(apiBaseUrl)
+        .then(function (response) {
+
+        console.log(response.data);
+        if(response.data){
+        
+          let sellerdet;
+          await this.getSellerdata().then((data)=>{
+            sellerdet=data;
+          })
+
+          if(sellerdet){
+            let riderM=sellerdet.data.find(a=>a._id==response.data[response.data.length-1].riderId)
+          }
+          if(riderM){
+            console.log("this is our rider",riderM)
+
+          }
+        }
+        if(response.data.code == 200){
+        
+        
+        console.log("done",response)
+        }
+        
+        })}
+    
+
+     async getSellerdata() {
+    var apiBaseUrl = "http://localhost:5000/rider/";
+    var self = this;
+    let temper;
+    console.log("this.prop", this.props.SET_KEY);
+    return await axios.get(apiBaseUrl + "getAllUsers");
+  }
    
     
 

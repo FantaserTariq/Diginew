@@ -21,8 +21,10 @@ import RiderSignup from '../Components/RiderSignUp'
 import NewHeader from '../Components/NewHeader'
 import NewSidebar from '../Components/NewSidebar'
 import Carousal from '../Components/Carousal'
-import OrderPage from "../Components/OrderPage.jsx";
+import OrderPage from "../Components/OrderPage";
 import FindRider from '../Components/FindRider'
+import SendRiderLocation from "../Components/SendRiderLocation";
+import OrderPlaced from "../Components/OrderPlaced"
 
 
 
@@ -50,7 +52,8 @@ class AppRouter extends React.Component {
                       <Route exact path="/Carousal" component={Carousal} />
                       <Route exact path="/OrderPage" component={OrderPage}/>
                       <Route exact path="/FindRider" component={FindRider}/>
-                      
+                      <Route exact path="/SendRiderLocation" component={SendRiderLocation}/>
+                      <Route exact path="/OrderPlaced" component={OrderPlaced}/>
                      
                   </Router>
 

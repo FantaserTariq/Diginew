@@ -59,6 +59,85 @@ router.post("/signup", (req, res) => {
     }).catch(err=>{
         console.log(err);
     });
+
 });
+
+
+router.post("/login", (req, res) => {
+
+
+    const email = req.body.email;
+    const password = req.body.password;
+
+    console.log(email, password);
+    //find user by email
+    Rider.findOne({
+        email: req.body.email
+    }).then(user => {
+        //Check for user
+        if (!user) {
+            console.log("here");
+            //errors.email = "User not found";
+            return res.json({ error: "Email Does Not Exist" });
+        }
+        console.log("yoy")
+        // Check Password
+        bcrypt.compare(password, user.password).then(isMatch => {
+            if (isMatch) {
+                //User Matched
+
+                const payload = {
+                    id: user.id,
+                    email: user.Email,
+                    name:user.firstName+" "+user.lastName,
+                    userType:"rider"
+                  
+                }; // Create Jwt payload
+
+                //Sign Token
+                jwt.sign(
+                    payload,
+                    keys.secretOrKey,
+                    {
+                        expiresIn: 3600 * 4
+                    },
+                    (err, token) => {
+                        res.json({
+                            success: true,
+                            token: "Bearer " + token,
+                            error:"loggedin"
+
+                        });
+                    }
+                );
+            } else {
+                //errors.password = "Password incorrect";
+                return res.json({ error: "Password incorrect" });
+            }
+        });
+    }).catch(err=>{
+        console.log(err)
+    });
+});
+
+router.get("/getAllUsers",
+    // passport.authenticate("jwt", {
+    //     session: false
+    // }),
+    (req, res) => {
+        Rider.find()
+            .then(users => {
+                if (!users) {
+                    return res.status(404).json(errors);
+                }
+                res.json(users);
+            })
+            //return res.json({ error: "Password incorrect" });
+            .catch(err => res.json({
+                user: 'There are no users'
+            }));
+
+    });
+
 
 module.exports = router;

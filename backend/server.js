@@ -12,6 +12,7 @@ const rider = require('./routes/rider')
 
 const product = require('./routes/products')
 const order = require('./routes/orderRoutes')
+const findrider = require('./routes/findrider')
 
 // dotenv.config()
 
@@ -106,6 +107,7 @@ app.use('/users', user)
 app.use('/rider', rider)
 app.use('/products', product)
 app.use('/order',order)
+app.use('/findrider',findrider)
 //app.use('/api/orders', orderRoutes)
 //app.use('/api/upload', uploadRoutes)
 

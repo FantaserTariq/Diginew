@@ -23,7 +23,7 @@ class AdDetails extends React.Component {
       key: "",
       path: Location,
       productDetail: {},
-
+seller:[],
       userdetails: [],
     };
   }
@@ -63,9 +63,23 @@ class AdDetails extends React.Component {
       temp = data.data;
     });
     console.log(temp, "we");
-    this.setState({ productDetail: temp }, () => {
+    this.setState({ productDetail: temp }, async () => {
       console.log("fasds", this.state.productDetail);
       localStorage.setItem('productId',this.state.productDetail._id);
+
+      let sellerdet;
+      await this.getSellerdata().then((data)=>{
+        sellerdet=data;
+      })
+      console.log(sellerdet,"seller data")
+     let tseller= sellerdet.data.find(a=>a._id==this.state.productDetail.user);
+     if(tseller){
+       console.log("mt seller");
+       this.setState({seller:tseller})
+
+       console.log(this.state.seller)
+     }
+
 
     });
 
@@ -106,6 +120,14 @@ class AdDetails extends React.Component {
     let temper;
     console.log("this.prop", this.props.SET_KEY);
     return await axios.get(apiBaseUrl + "getProducts/" + this.props.SET_KEY);
+  }
+
+  async getSellerdata() {
+    var apiBaseUrl = "http://localhost:5000/users/";
+    var self = this;
+    let temper;
+    console.log("this.prop", this.props.SET_KEY);
+    return await axios.get(apiBaseUrl + "getAllUsers");
   }
 
   render() {
@@ -221,7 +243,7 @@ class AdDetails extends React.Component {
                         marginTop: "16px",
                       }}
                     >
-                      {this.state.productDetail.SellerName}
+                      {this.state.seller.firstName+this.state.seller.lastName}
                     </p>
                   </div>
                 </div>
@@ -249,7 +271,7 @@ class AdDetails extends React.Component {
                       { marginRight: "10px" })
                     }
                   />{" "}
-                  {this.state.productDetail.mobilePhone}
+                  {this.state.seller.PhoneNumber}
                 </h6>
                 <div style={{ display: "flex" }}>
                   <h4 style={{ marginLeft: "10px" }} className="text-dark">

@@ -30,11 +30,35 @@ class Login extends React.Component {
           error:'',
           redirect:true,
           isLoggedin:localStorage.getItem("token"),
+          userdetails:[],
+          proceed:'',
         }
       }
 
     
-      
+      componentDidMount() {
+        if(localStorage.getItem('token')){
+            var token= localStorage.getItem('token');
+            if (token) 
+            { var base64Url = token.split('.')[1]; 
+          var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); 
+          var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) { return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2); }).join('')); 
+          console.log(JSON.parse(jsonPayload),"daasdasdas")
+          var tempor=JSON.parse(jsonPayload);
+          console.log("f",tempor)
+            this.setState({userdetails:tempor},() => {
+                console.log(this.state.userdetails, 'dealersOverallTotal1');
+                if(this.state.userdetails.userType=='rider'){
+                  console.log("im am rider");
+                  this.setState({proceed:"go"})
+                }
+              });
+            if(this.state.userdetails){
+            console.log(this.state.userdetails,"user details");
+            }
+        }
+            }
+    }
     submitHandler = event => {  event.preventDefault()
 
             
@@ -65,7 +89,9 @@ class Login extends React.Component {
     console.log(response);
     if(response.data.code == 200){
     console.log("Login successfull");
-    return <Redirect to='http://localhost:5001/Home' />
+    window.location.reload();
+    return <Redirect to='http://localhost:5001/' />
+    
 
     
     
@@ -76,6 +102,7 @@ class Login extends React.Component {
     
     else{
       console.log(response.data.error)
+      window.location.reload();
       alert(response.data.error)
       if(response.data.token){
         console.log("yo here",response.data.token);
@@ -199,7 +226,7 @@ class Login extends React.Component {
    </div>):(
                             <div style={{ marginTop: "50vh" }}>
 
-                                <h1 className="text-center text-warning">You are already logged in</h1>
+                                <h1 className="text-center text-warning">You are logged in</h1>
                                 <Route
       path="/"
       // render={({ match }) => {
@@ -207,7 +234,18 @@ class Login extends React.Component {
       //   return <div />;
       // }}
     />
-                                <div className="text-center"><Link className="btn btn-primary btn-lg" to="/">Login</Link></div>
+                                <div className="text-center">
+                                  {
+                                    (this.state.proceed!='')?
+                                    (<div>
+                                      <Link className="btn btn-primary btn-lg" to="/SendRiderLocation">Proceed</Link>
+                                      </div>):
+                                    (<div>
+                                      <Link className="btn btn-primary btn-lg" to="/">Home</Link>
+                                      </div>)
+                                  }
+                                  
+                                  </div>
                             </div>
                         )}
                         </div>

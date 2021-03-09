@@ -35,7 +35,15 @@ class Header extends React.Component {
       isLoggedin:localStorage.getItem("token"),
       userdetails:[],
     };
+    this.componentDidMount()
     //alert(this.props.search_ads)
+  }
+
+  handle = async event => {  event.preventDefault()
+    localStorage.removeItem('token');
+   
+this.setState({userdetails:[]})
+
   }
 
 
@@ -60,7 +68,10 @@ class Header extends React.Component {
         }
 }
   sign_out = () => {
-    firebase.auth().signOut();
+    // firebase.auth().signOut();
+    localStorage.removeItem('token');
+   
+    this.setState({userdetails:[]})
     window.location.reload();
   };
   setLocation = (e) => {
@@ -88,7 +99,7 @@ class Header extends React.Component {
     console.log("Chal raha hai Dummy", this.props.search_ads);
   };
 
-  componentDidMount() {}
+ 
   render() {
     this.props.showCondition(this.state.condition);
     console.log(
@@ -123,13 +134,37 @@ class Header extends React.Component {
         {/* This is boostrap navigation bar */}
         {/* The actual thing from which I learnt how to develop a search functionality */}
 
-        <nav
+        
+          <div>
+            {
+              (this.state.userdetails.userType=="rider")?
+              (
+                <nav
           style={{ position: "center", textAlign:"center" , zIndex: "60000"}}
           className="navbar navbar-expand-lg navbar-light bg-light .container-fluid"
         >
           
+
           <h2 class="header-class" style={{fontSize: "30px"}}>Digimart</h2>
           <button
+                          onClick={this.sign_out}
+                          className="btn btn-outline-light btn-danger"
+                          style={{ textAlign: "center", fontSize: "25px" }}
+                        >
+                          SignOut
+                        </button>
+                </nav>
+              ):
+              (
+                <div>
+                  <nav
+          style={{ position: "center", textAlign:"center" , zIndex: "60000"}}
+          className="navbar navbar-expand-lg navbar-light bg-light .container-fluid"
+        >
+          
+
+          <h2 class="header-class" style={{fontSize: "30px"}}>Digimart</h2>
+                <button
             className="navbar-toggler"
             type="button"
             data-toggle="collapse"
@@ -499,14 +534,36 @@ class Header extends React.Component {
                   </div>
                 )}
               </li>
+              <li className="nav-item">
+                {this.state.isLoggedin ? (
+                  <button className=" btn btn-warning btn-lg" onClick={this.sign_out}>Sign Out</button>
+                ) : (
+                  // <Link id="sellbtn" to="" className="btn btn-info">SELL</Link>
+                  <div>
+                   " <Link
+                      id="sellbtn"
+                      className=" btn btn-warning btn-lg"
+                      to="/RiderSignup"
+                    >
+                      Rider Sign Up
+                    </Link>
+                    {/* <div clas"sName="btn btn-outline-dark btn-warning" style={{ marginLeft: "170%", marginTop: "2%" }}><Login /></div> */}
+                  </div>
+                )}
+              </li>
 
               
             </ul>
           </div>
+          </nav>
+</div>
 
 
+             )
+            }
+          </div>
+         
 
-        </nav>
 
 
        

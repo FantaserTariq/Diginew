@@ -17,7 +17,6 @@ router.post("/addproduct", (req, res) => {
     console.log("sdsa",req.body)
     console.log("done")
    
-
             console.log(req.body,"fasda");
             const newProduct = new Product({
                 user:req.body.user,

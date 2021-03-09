@@ -211,7 +211,13 @@ class OrderPage extends React.Component {
             </fieldset>
            
 
-            <div className="text-center"><Link className="btn btn-primary btn-lg" to="/FindRider">Place Order</Link></div>
+            <div className="text-center">
+             {   (this.state.zipcode !='')?(
+              <Link className="btn btn-primary btn-lg" to="/FindRider" disabled={this.state.zipcode != ""}>Place Order</Link>)
+              : ""
+                
+  }
+              </div>
            
           </form>
           </Card>
@@ -234,6 +240,7 @@ class OrderPage extends React.Component {
       //   return <div />;
       // }}
     />
+                               
                                 <div className="text-center"><Link className="btn btn-primary btn-lg" to="/Home">Login</Link></div>
                             </div>
                         )}

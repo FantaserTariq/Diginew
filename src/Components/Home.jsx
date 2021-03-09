@@ -108,9 +108,7 @@ class HomePage extends React.Component {
                   */}
                     
                     <hr />
-                    <div className="image">
-                    <img className=".container-fluid" id="frontPic" src={frontPic} alt="This is the front pic of olx" />
-                    </div>
+                    
 
                    
                     <div className="Featured_Ads" style={{marginLeft: "270px", marginTop: "20px"}}>

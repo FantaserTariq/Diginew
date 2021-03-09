@@ -149,13 +149,12 @@ class Attributes extends React.Component {
         "user":selldata.SellerId,
         "title":selldata.title,        
         "image":selldata.url,
-        "category":selldata.Category   ,
-        "subCategory":selldata.SubCategory,
+        "category":selldata.Category?selldata.Category:"none"   ,
+        "subCategory":selldata.SubCategory?selldata.SubCategory:"none",
         "description":selldata.description,
         "price":selldata.price,
         "productLocation":selldata.productLocation,    
         "itemcCondition":selldata.itemCondition,
-    
 
     }
     axios.post(apiBaseUrl+'addproduct', payload)
@@ -341,7 +340,7 @@ class Attributes extends React.Component {
                                         <div>
                                         {/* <h6 className="text-info">{firebase.auth().currentUser.displayName} Only One Step more(PhoneAuth) please click Next to continue *</h6> */}
                                         <br/>
-                                        <Link to="/phoneauth" onClick={this.move} style={{ fontSize: "20px" }} className="btn btn-dark btn-lg" to="/phoneauth">Move Next</Link>
+                                        <Link to="/success" onClick={this.move} style={{ fontSize: "20px" }} className="btn btn-dark btn-lg" to="/success">Move Next</Link>
                                         </div>
                                     ):(
                                         <h6 className="text-danger">{this.props.USER_AUTH_DATA.name} Thanks Please fill all the fields and agree to the agreement to continue</h6>    

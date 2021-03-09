@@ -1,9 +1,14 @@
 #form
 {
-    border: 0.5px solid black;
+    border: 1px solid black;
     width: 90%;
     margin: auto;
+    padding: 60px;
 }
+#form input, textarea, progress{
+    width:550px !important;
+}
+
 h4,h6,button,label{
     padding-left: 2%;
 }
