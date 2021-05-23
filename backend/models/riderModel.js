@@ -17,9 +17,9 @@ const riderSchema = mongoose.Schema(
             unique: true,
         },
         phone: {
-            type: Number,
+            type: String,
             required: true,
-            unique: true,
+            
         },
         password: {
             type: String,

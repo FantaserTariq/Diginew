@@ -25,7 +25,10 @@ import OrderPage from "../Components/OrderPage";
 import FindRider from '../Components/FindRider'
 import SendRiderLocation from "../Components/SendRiderLocation";
 import OrderPlaced from "../Components/OrderPlaced"
-
+import PaymentMethod from "../Components/PaymentMethod"
+import JazzCash from "../Components/JazzCash"
+import EasyPaisa from "../Components/EasyPaisa"
+import BankTransfer from "../Components/BankTransfer"
 
 
 class AppRouter extends React.Component {
@@ -54,6 +57,10 @@ class AppRouter extends React.Component {
                       <Route exact path="/FindRider" component={FindRider}/>
                       <Route exact path="/SendRiderLocation" component={SendRiderLocation}/>
                       <Route exact path="/OrderPlaced" component={OrderPlaced}/>
+                      <Route exact path="/PaymentMethod" component={PaymentMethod}/>
+                      <Route exact path="/JazzCash" component={JazzCash}/>
+                      <Route exact path="/EasyPaisa" component={EasyPaisa}/>
+                      <Route exact path="/BankTransfer" component={BankTransfer}/>
                      
                   </Router>
 

@@ -30,18 +30,18 @@ class OrderPage extends React.Component {
         console.log(response.data);
         if(response.data){
         
-          let sellerdet;
-          await this.getSellerdata().then((data)=>{
-            sellerdet=data;
-          })
+          // let sellerdet;
+          // await this.getSellerdata().then((data)=>{
+          //   sellerdet=data;
+          // })
 
-          if(sellerdet){
-            let riderM=sellerdet.data.find(a=>a._id==response.data[response.data.length-1].riderId)
-          }
-          if(riderM){
-            console.log("this is our rider",riderM)
+          // if(sellerdet){
+          //   let riderM=sellerdet.data.find(a=>a._id==response.data[response.data.length-1].riderId)
+          // }
+          // if(riderM){
+          //   console.log("this is our rider",riderM)
 
-          }
+          // }
         }
         if(response.data.code == 200){
         

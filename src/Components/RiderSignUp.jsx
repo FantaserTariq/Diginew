@@ -49,8 +49,9 @@ class RiderSignup extends React.Component {
         
         "firstname": this.state.first_name,
         "lastname": this.state.last_name,
-        "phone": this.state.phone,
+        
         "email": this.state.email,
+        "phone": this.state.phone,
         "password": this.state.password,
         "drivingLicenseNumber": this.state.drivingLicenseNumber,
         "vehicleNumber": this.state.vehicleNumber,
@@ -63,10 +64,12 @@ class RiderSignup extends React.Component {
         .then(function (response) {
           console.log(response);
           if (response.data.code == 200) {
-            console.log("Login successfull");
+            console.log("SignUp successfull");
           } else{
-            console.log(response.data.error);
-            alert(response.data.error);
+            console.log("SignUp successfull");
+            alert("Sign Up Successful")
+            // console.log(response.data.error);
+            // alert(response.data.error);
             }
             })
             .catch(function (error) {
@@ -99,17 +102,8 @@ class RiderSignup extends React.Component {
                 style={{ marginLeft: "60px" }}
                 onSubmit={this.submitHandler}
               >
-                  <div className="form-group" style={{ marginTop: "25px" }}>
-                  <label>Driver ID</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Driver ID"
-                    onChange={(e) =>
-                      this.setState({ driver_id: e.target.value })
-                    }
-                  />
-                </div>
+                  
+                
                 <div className="form-group" style={{ marginTop: "25px" }}>
                   <label>First name</label>
                   <input

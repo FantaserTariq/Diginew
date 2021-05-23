@@ -109,6 +109,21 @@ class OrderPage extends React.Component {
     });
     }
 
+    showButton(e){
+      
+      let zipcode = e.target.value
+      if (this.state.zipcode === '') {
+        document.getElementById('plOrder').style.display='none'
+      }else{
+        document.getElementById('plOrder').style.removeProperty('display')
+      }
+      
+      this.setState({
+        zipcode:zipcode
+      })
+
+    }
+
    
     
 
@@ -200,7 +215,7 @@ class OrderPage extends React.Component {
                 type="text"
                 className="form-control"
                 placeholder="Enter Zip Code"
-                onChange={(e) => this.setState({zipcode:e.target.value})}
+                onChange={(e) => {this.showButton(e)}}
               />
             </div>
             <fieldset>
@@ -211,9 +226,9 @@ class OrderPage extends React.Component {
             </fieldset>
            
 
-            <div className="text-center">
+            <div className="text-center" id="plOrder">
              {   (this.state.zipcode !='')?(
-              <Link className="btn btn-primary btn-lg" to="/FindRider" disabled={this.state.zipcode != ""}>Place Order</Link>)
+              <Link className="btn btn-primary btn-lg" to="/PaymentMethod" >Place Order</Link>)
               : ""
                 
   }
@@ -234,14 +249,14 @@ class OrderPage extends React.Component {
 
                                 <h1 className="text-center text-warning">You are already logged in</h1>
                                 <Route
-      path="/Home"
+      path="/"
       // render={({ match }) => {
       //   // Do whatever you want with the match...
       //   return <div />;
       // }}
     />
                                
-                                <div className="text-center"><Link className="btn btn-primary btn-lg" to="/Home">Login</Link></div>
+                                <div className="text-center"><Link className="btn btn-primary btn-lg" to="/">Login</Link></div>
                             </div>
                         )}
                         </div>
