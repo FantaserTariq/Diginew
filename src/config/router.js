@@ -34,6 +34,16 @@ import PaymentMethod from '../Components/PaymentMethod';
 import JazzCash from '../Components/JazzCash';
 import EasyPaisa from '../Components/EasyPaisa';
 import BankTransfer from '../Components/BankTransfer';
+import Buyer from '../Components/Admin/Buyer';
+import Buyertracking from '../Components/Admin/Buyertracking';
+import Confirmation from '../Components/Admin/Confirmation';
+import Deliverer from '../Components/Admin/Deliverer';
+import home from '../Components/Admin/home';
+import Orderdelivery from '../Components/Admin/Orderdelivery';
+import Ordertracking from '../Components/Admin/Ordertracking';
+import Seller from '../Components/Admin/Seller';
+import Sellertracking from '../Components/Admin/Sellertracking';
+import ViewList from '../Components/Admin/ViewList';
 
 class AppRouter extends React.Component {
   render() {
@@ -50,7 +60,7 @@ class AppRouter extends React.Component {
         <Route exact path='/AdDetails' component={AdDetails} />
         <Route exact path='/myads' component={MyAds} />
         <Route exact path='/types' component={Types} />
-        <Route exact path='/footer' component={Footer} />
+        <Route exact path='/Footer' component={Footer} />
         <Route exact path='/Signup' component={Signup} />
         <Route exact path='/RiderSignup' component={RiderSignup} />
         <Route exact path='/NewHeader' component={NewHeader} />
@@ -63,6 +73,16 @@ class AppRouter extends React.Component {
         <Route exact path='/JazzCash' component={JazzCash} />
         <Route exact path='/EasyPaisa' component={EasyPaisa} />
         <Route exact path='/BankTransfer' component={BankTransfer} />
+        <Route exact path='/Buyer' component={Buyer}/>
+        <Route exact path='/Buyertracking' component={Buyertracking}/>
+        <Route exact path='/Confirmation' component={Confirmation}/>
+        <Route exact path='/Deliverer' component={Deliverer}/>
+        <Route exact path='/home' component={home}/>
+        <Route exact path='/Orderdelivery' component={Orderdelivery}/>
+        <Route exact path='/Ordertracking' component={Ordertracking}/>
+        <Route exact path='/Seller' component={Seller}/>
+        <Route exact path='/Sellertracking' component={Sellertracking}/>
+        <Route exact path='/ViewList' component={ViewList}/>
       </Router>
     );
   }
