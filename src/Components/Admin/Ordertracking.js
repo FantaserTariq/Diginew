@@ -4,8 +4,64 @@ import Sidebar from "./Sidebar.js";
 import Footer from "./Footer";
 import { Router, Link } from "react-router-dom";
 import ViewList from "./ViewList";
+import axios from 'axios';
 class Ordertracking extends React.Component{
+  state = {
+  
+    userads: [],
+  };
+
+
+  async getdata(){
+    var apiBaseUrl = "http://localhost:5000/order/";
+    var self = this;
+    let temper
+  return await axios.get(apiBaseUrl+'getAllOrders')
+    
+}
+seting(inp){
+    console.log(inp,"in set")
+    this.setState({userads:inp.data},()=>{
+        console.log("yoyo",this.state.userads)
+    })
+    
+}
+async componentDidMount() {
+  
+    console.log("here")
+    let tempor=await this.getdata();
+    console.log("csac",tempor);
+    var a=await this.seting(tempor);
+       
+}
+
+  displayBlogPost = (post) => {
+    console.log(post)
+    if (!post.length) return null;
+    
+    var count = 1;
+    let t = post.map((post, index) => {
+      console.log(post)
+      return (
+          <tr className='unread'>
+            <td style={{ textAlign: 'center' }}>{"hello1"}</td>
+            <td style={{ textAlign: 'center' }}>{"hello1"}</td>
+            <td style={{ textAlign: 'center' }}>{"hello1"}</td>
+          
+            </tr>
+      );
+    })}
+
+
     render(){
+      const items = []
+    {this.state.userads.map((value, index) => {
+      items.push(<td key={index}><img src={value.imageUrl}></img></td>)
+      items.push(<td key={index}>{value.user.firstName}</td>)
+      
+      items.push(<td key={index}>{value.product._id}</td>)
+      
+    })}
         return(
   <div>
 
@@ -46,6 +102,21 @@ class Ordertracking extends React.Component{
                 <div className="card-body">
                   <h4 className="mt-0 header-title">Order Tracking</h4>
                   <div className="px-4">
+                  <table
+                        id='datatable'
+                        className='table table-bordered dt-responsive nowrap'
+                        style={{ borderCollapse: 'collapse', borderSpacing: 0, width: '100%' }}
+                      >
+                        <thead>
+                          <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                          </tr>
+                        </thead>
+                        <tbody>{this.displayBlogPost(this.state.userads)}</tbody>
+                      </table>
                   <table id="datatable" className="table table-bordered dt-responsive nowrap" style={{borderCollapse: 'collapse', borderSpacing: 0, width: '100%'}}>
                     
                     <thead className="font-weight-bold">
@@ -56,6 +127,11 @@ class Ordertracking extends React.Component{
                         <td></td>
                       </tr>
                     </thead>
+                    <tr>
+                  
+      {items}
+
+                    </tr>
                     <tbody>
                     <tr>
                         <td>Wooden Table</td>
@@ -93,7 +169,7 @@ class Ordertracking extends React.Component{
                     </tbody>
                   </table>
 
-                  
+      
                   </div>
 
                 </div>

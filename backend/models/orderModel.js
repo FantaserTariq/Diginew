@@ -26,6 +26,14 @@ const orderSchema = mongoose.Schema(
       required: true,
     },
 
+    imageUrl:{
+      type: String,
+    },
+    isApproved:{
+      type:Boolean,
+      default:false
+    }
+
     
     
   },

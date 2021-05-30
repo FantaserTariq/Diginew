@@ -66,27 +66,58 @@ router.post('/addorder', (req, res) => {
 
   newOrder
     .save()
-    .then((order) => res.json({ order, error: 'Order Placed Successfully' }))
+    .then((order) => res.status(200).json({ order, data : 'Order Placed Successfully' }))
     .catch((err) => console.log(err));
 });
 
 router.post('/addpayment/:id', (req, res) => {
+  console.log(req.body,"image")
   try {
     const id = req.params.id;
     const { imageUrl } = req.body;
-    const order = Order.findByIdAndUpdate(id, { $set: { imageUrl: imageUrl } });
+    console.log(imageUrl);
+    Order.findById({
+      _id:id
+    }).then(data=>{
+      if(data){
+        data.imageUrl=imageUrl
+        Order.findByIdAndUpdate(id, data).then(data=>{
+          return res.status(200).json({ order, msg: 'Payment Sent' });
+        }).catch(err=>{
+          return res.json({
+            error:err
+          })
+        })
+      }
+    })
+    .catch(err=>{
+      return res.json({
+        error:err
+      })
+    })
 
-    return res.json({ order, msg: 'Payment Sent' });
   } catch (err) {
     console.log(err);
   }
 });
 
-router.post('/getAllOrders', (req, res) => {
+router.get('/getAllOrders', (req, res) => {
   try {
-    const order = Order.find();
+    Order.find({
+      isApproved:false
+    })
+    .populate("user")
+    .populate("product")
+    
+    .then(data=>{
+      return res.json(data);
+    }).catch(err=>{
+      return res.json({
+        error:err
+      })
+    })
 
-    return res.json(order);
+  
   } catch (err) {
     console.log(err);
   }

@@ -62,9 +62,10 @@ class PaymentMethod extends React.Component {
       );
       console.log(response.data);
       data = { imageUrl: response.data.url };
+      let abc=localStorage.getItem('orderId')
 
       const resp = await axios.post(
-        'http://localhost:3000/order/addpayment/',
+        'http://localhost:5000/order/addpayment/'+abc,
         data
       );
       return resp.data;

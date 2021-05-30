@@ -2,8 +2,47 @@ import React from 'react';
 import Header from "./Header.js";
 import Sidebar from "./Sidebar.js";
 import Footer from "./Footer";
+import axios from "axios";
 
 class Seller extends React.Component{
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      _id: '',
+      posts: [],
+      post: { name: '', deadline: '', budget: '', client: '' },
+    };
+  }
+
+  componentDidMount() {
+    axios
+      .get('http://localhost:5000/users/getAllUsers', {})
+      .then((response) => {
+        const data = response.data;
+        console.log(data);
+        this.setState({ posts: data });
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }
+  displayBlogPost = (posts) => {
+    if (!posts.length) return null;
+    var count = 1;
+    let t = posts.map((post, index) => {
+      return (
+          <tr className='unread'>
+            <td style={{ textAlign: 'center' }}>{post.firstName}</td>
+            <td style={{ textAlign: 'center' }}>{post.lastName}</td>
+            <td style={{ textAlign: 'center' }}>{post.Email}</td>
+            <td style={{ textAlign: 'center' }}>{post.PhoneNumber}</td>
+            </tr>
+      );
+    });
+    return t;
+  };
+
     render(){
         return(
   <div>
@@ -43,36 +82,21 @@ class Seller extends React.Component{
               <div className="card m-b-30">
                 <div className="card-body">
                   <h4 className="mt-0 header-title">View Sellers</h4>
-                  <table id="datatable" className="table table-bordered dt-responsive nowrap" style={{borderCollapse: 'collapse', borderSpacing: 0, width: '100%'}}>
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Password</th>
-                        <th>Address</th>
-                        <th>E-Mail</th>
-                        <th>Start date</th>
-                        <th>Orders</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Tiger Nixon</td>
-                        <td>brt45678</td>
-                        <td>Edinburgh</td>
-                        <td>tiger@gmail.com</td>
-                        <td>2011/04/25</td>
-                        <td>4</td>
-                      </tr>
-                      <tr>
-                        <td>Garrett Winters</td>
-                        <td>dfg567b</td>
-                        <td>Tokyo</td>
-                        <td>garrett@gmail.com</td>
-                        <td>2011/07/25</td>
-                        <td>10</td>
-                      </tr>
-                      </tbody>
-                  </table>
+                  <table
+                        id='datatable'
+                        className='table table-bordered dt-responsive nowrap'
+                        style={{ borderCollapse: 'collapse', borderSpacing: 0, width: '100%' }}
+                      >
+                        <thead>
+                          <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                          </tr>
+                        </thead>
+                        <tbody>{this.displayBlogPost(this.state.posts)}</tbody>
+                      </table>
                 </div>
               </div>
             </div> {/* end col */}

@@ -18,6 +18,7 @@ import {
 
 class OrderPage extends React.Component {
   constructor(props) {
+    let orderid=""
     super(props);
     this.state = {
       address: '',
@@ -25,10 +26,12 @@ class OrderPage extends React.Component {
       zipcode: '',
       userdetails: [],
       product: localStorage.getItem('productId'),
+    
 
       isLoggedin: localStorage.getItem('token'),
     };
   }
+  
 
   componentDidMount() {
     if (localStorage.getItem('token')) {
@@ -80,9 +83,13 @@ class OrderPage extends React.Component {
       .post(apiBaseUrl, payload)
       .then(function (response) {
         console.log(response);
-        if (response.data.code == 200) {
-          console.log('Login successfull');
-          return <Redirect to='http://localhost:5001/Home' />;
+        if (response.status == 200) {
+          document.getElementById('proceedbutton').style.display="block"
+          document.getElementById('verify').style.display="none"
+          
+          console.log('Login successfull',response.data.order);
+          localStorage.setItem('orderId',response.data.order._id)
+          return <Redirect to='http://localhost:5001/PaymentMethod/${this.state.userdetails.id}' />;
         } else {
           console.log(response.data.error);
           alert(response.data.error);
@@ -218,15 +225,21 @@ class OrderPage extends React.Component {
 
                       <div className='text-center' id='plOrder'>
                         {this.state.zipcode != '' ? (
-                          <Link
-                            className='btn btn-primary btn-lg'
-                            to={`/PaymentMethod/${this.state.userdetails.id}`}
-                          >
-                            Place Order
-                          </Link>
+                          <button id="verify" >Verify Information</button>
+                         
+                       
                         ) : (
                           ''
                         )}
+                                                 <Link
+                         id="proceedbutton" style={{ display: 'none' }} className='btn btn-primary btn-lg'
+                          to={`/PaymentMethod/${this.state.userdetails.id}`}
+                        >
+                          Proceed
+                        </Link>  
+                       
+                        
+                        
                       </div>
                     </form>
                   </Card>
