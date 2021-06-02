@@ -38,12 +38,15 @@ import Buyer from '../Components/Admin/Buyer';
 import Buyertracking from '../Components/Admin/Buyertracking';
 import Confirmation from '../Components/Admin/Confirmation';
 import Deliverer from '../Components/Admin/Deliverer';
-import home from '../Components/Admin/home';
+
+import Admin from '../Components/Admin/home';
+
 import Orderdelivery from '../Components/Admin/Orderdelivery';
 import Ordertracking from '../Components/Admin/Ordertracking';
 import Seller from '../Components/Admin/Seller';
 import Sellertracking from '../Components/Admin/Sellertracking';
 import ViewList from '../Components/Admin/ViewList';
+import riderDetails from '../Components/riderDetails'
 
 class AppRouter extends React.Component {
   render() {
@@ -77,12 +80,15 @@ class AppRouter extends React.Component {
         <Route exact path='/Buyertracking' component={Buyertracking}/>
         <Route exact path='/Confirmation' component={Confirmation}/>
         <Route exact path='/Deliverer' component={Deliverer}/>
-        <Route exact path='/home' component={home}/>
+
+        <Route exact path='/admin' component={Admin}/>
+
         <Route exact path='/Orderdelivery' component={Orderdelivery}/>
         <Route exact path='/Ordertracking' component={Ordertracking}/>
         <Route exact path='/Seller' component={Seller}/>
         <Route exact path='/Sellertracking' component={Sellertracking}/>
         <Route exact path='/ViewList' component={ViewList}/>
+        <Route exact path='/riderDetails' component={riderDetails}/>
       </Router>
     );
   }

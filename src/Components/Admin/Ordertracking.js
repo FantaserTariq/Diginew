@@ -52,14 +52,44 @@ async componentDidMount() {
       );
     })}
 
+    ApproveRequest=  async (value)=>{
+    
+      console.log(value)
+      try {
+        var data = new FormData();
+   
+      
+ 
+        data = { msg: "Your order : "+ value._id + " has been approved",
+                orderId:value._id  };
+
+        let abc=localStorage.getItem('orderId')
+  
+        const resp = await axios.post(
+          'http://localhost:5000/users/setNotification/'+value.user._id,
+          data
+        );
+        document.getElementById("approveButton").style.display="none"
+        document.getElementById("findriderButton").style.display="block"
+        
+        localStorage.setItem("myOrder",value._id)
+        
+     
+        return resp.data;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
 
     render(){
       const items = []
+      const row=[]
     {this.state.userads.map((value, index) => {
-      items.push(<td key={index}><img src={value.imageUrl}></img></td>)
-      items.push(<td key={index}>{value.user.firstName}</td>)
+      if(value._id && value.imageUrl && value.user._id)
       
-      items.push(<td key={index}>{value.product._id}</td>)
+      items.push(<tr><td key={index}><img height="100px" width="100px" src={value.imageUrl}></img></td><td key={index}>{value.user.firstName?value.user.firstName:"N/A"}</td><td key={index}>{value._id}</td><td> <button id="approveButton"  onClick={() => this.ApproveRequest(value)}>Approval</button></td><td>  <Link style={{display:"none"}} id="findriderButton"   to="/FindRider" >Approval</Link></td></tr>)
+      
       
     })}
         return(
@@ -107,14 +137,7 @@ async componentDidMount() {
                         className='table table-bordered dt-responsive nowrap'
                         style={{ borderCollapse: 'collapse', borderSpacing: 0, width: '100%' }}
                       >
-                        <thead>
-                          <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                          </tr>
-                        </thead>
+
                         <tbody>{this.displayBlogPost(this.state.userads)}</tbody>
                       </table>
                   <table id="datatable" className="table table-bordered dt-responsive nowrap" style={{borderCollapse: 'collapse', borderSpacing: 0, width: '100%'}}>
@@ -124,49 +147,19 @@ async componentDidMount() {
                         <td>Order Name</td>
                         <td>Order ID</td>
                         <td>Seller Name</td>
-                        <td></td>
+                        <td>Approval Notification</td>
+                       
+                        
                       </tr>
+                      
                     </thead>
-                    <tr>
+                 {row}
                   
       {items}
+     
 
-                    </tr>
-                    <tbody>
-                    <tr>
-                        <td>Wooden Table</td>
-                        <td>ty2345678</td>
-                        <td>Ali Sardar</td>
+                   
 
-                        {/* Inme se ek aye ga button */}
-                      <td className="text-center">
-                          <div className="pb-2">
-                            <Link to='#'>
-                              <a href="#" className="btn btn-danger btn-md">Finding Rider</a>
-                            </Link>
-                            </div>
-                        
-                          <div className="pb-2">
-                            <Link to='#'>
-                              <a href="#" className="btn btn-primary btn-md">or Pickup</a>
-                            </Link>
-                            </div>
-                        
-                          <div className="pb-2">
-                            <Link to='#'>
-                              <a href="#" className="btn btn-primary btn-md">or On the Way</a>
-                            </Link>
-                            </div>
-                        
-                          <div>
-                            <Link to='#'>
-                              <a href="#" className="btn btn-success btn-md">or Delivered</a>
-                            </Link>
-                            </div>
-                        </td>
-                      </tr>
-                    
-                    </tbody>
                   </table>
 
       

@@ -2,9 +2,143 @@ import React from 'react';
 import Header from "./Header.js";
 import Sidebar from "./Sidebar.js";
 import Footer from "./Footer";
+import axios from "axios";
+import {Bar} from 'react-chartjs-2';
+import {Line} from 'react-chartjs-2';
+import {Doughnut} from 'react-chartjs-2';
+
+const state3 = {
+  labels: ['Users', 'Deliverers', 'Products',
+  'Orders', 'Admins'],
+  datasets: [
+    {
+
+      backgroundColor: [
+        '#30419b',
+        '#5961C1',
+        '#1A348B',
+        '#3646A0',
+        '#0061B3'
+      ],
+      hoverBackgroundColor: [
+        '#30419b',
+        '#5961C1',
+        '#1A348B',
+        '#3646A0',
+        '#0061B3'
+      ],
+      data: [18, 12, 8, 1, 2]
+    }
+  ]
+}
+
+const state1 = {
+  labels: ['Users', 'Deliverers', 'Products',
+           'Orders', 'Admins'],
+  datasets: [
+    {
+      backgroundColor: '#30419b',
+      borderColor: 'rgba(0,0,0,1)',
+      borderWidth: 1,
+      data: [18, 12, 8, 1, 2]
+    }
+  ]
+}
+
+
+
+const state2 = {
+  labels: ['Users', 'Deliverers', 'Products', 'Orders', 'Admins'],
+  datasets: [
+    {
+      fill: false,
+      lineTension: 1,
+      backgroundColor: '#000000',
+      borderColor: 'rgba(0,0,0,1)',
+      borderWidth: 1,
+      data: [18, 12, 8, 1, 2]
+    }
+  ]
+}
 
 
 class home extends React.Component{
+
+    constructor(props) {
+      super(props);
+      this.state = {
+        count: '',
+        _id: '',
+        posts: [],
+		    posts1: [],
+        posts2: [],
+        posts3: [],
+        post: { name: '', deadline: '', budget: '', client: '' },
+      };
+    }
+  
+    componentDidMount() {
+      axios
+        .get('http://localhost:5000/users/getAllUsers', {})
+        .then((response) => {
+          const data = response.data;
+          console.log(data);
+          this.setState({ posts: data });
+        })
+        .catch((err) => {
+          alert(err);
+        });
+		axios
+        .get('http://localhost:5000/order/getAllOrders', {})
+        .then((response) => {
+          const data = response.data;
+          console.log(data);
+          this.setState({ posts1: data });
+        })
+        .catch((err) => {
+          alert(err);
+        });
+
+        axios
+        .get('http://localhost:5000/rider/getAllUsers', {})
+        .then((response) => {
+          const data = response.data;
+          console.log(data);
+          this.setState({ posts2: data });
+        })
+        .catch((err) => {
+          alert(err);
+        });
+        axios
+        .get('http://localhost:5000/products/getAllProducts', {})
+        .then((response) => {
+          const data = response.data;
+          console.log(data);
+          this.setState({ posts3: data });
+        })
+        .catch((err) => {
+          alert(err);
+        });
+
+    }
+    displayBlogPost = (posts3) => {
+      if (!posts3.length) return null;
+      var count = 1;
+      let t = posts3.map((post, index) => {
+        return (
+            <tr className='unread'>
+              <td style={{ textAlign: 'center' }}>{post.title}</td>
+              <td style={{ textAlign: 'center' }}>{post.price}</td>
+              <td style={{ textAlign: 'center' }}>{post.category}</td>
+            </tr>
+        );
+      });
+      return t;
+    };
+
+
+  
+
     render(){
         return(
   <div>
@@ -43,11 +177,14 @@ class home extends React.Component{
                     <i className="mdi mdi-cube-outline bg-primary  text-white" />
                   </div>
                   <div>
-                    <h5 className="font-16">Active Sessions</h5>
+                    <h5 className="font-16">Total Orders</h5>
                   </div>
-                  <h3 className="mt-4">43,225</h3>
+
+                    <h3 className="mt-4">{this.state.posts1.length}</h3>
+
+
                   <div className="progress mt-4" style={{height: '4px'}}>
-                    <div className="progress-bar bg-primary" role="progressbar" style={{width: '75%'}} aria-valuenow={75} aria-valuemin={0} aria-valuemax={100} />
+                    <div className="progress-bar bg-primary" role="progressbar" style={{width: '100%'}} aria-valuenow={75} aria-valuemin={0} aria-valuemax={100} />
                   </div>
                   </div>
               </div>
@@ -59,11 +196,11 @@ class home extends React.Component{
                     <i className="mdi mdi-briefcase-check bg-success text-white" />
                   </div>
                   <div>
-                    <h5 className="font-16">Total Revenue</h5>
+                    <h5 className="font-16">Products</h5>
                   </div>
-                  <h3 className="mt-4">$73,265</h3>
+                  <h3 className="mt-4">{this.state.posts3.length}</h3>
                   <div className="progress mt-4" style={{height: '4px'}}>
-                    <div className="progress-bar bg-success" role="progressbar" style={{width: '88%'}} aria-valuenow={88} aria-valuemin={0} aria-valuemax={100} />
+                    <div className="progress-bar bg-success" role="progressbar" style={{width: '100%'}} aria-valuenow={88} aria-valuemin={0} aria-valuemax={100} />
                   </div>
                   </div>
               </div>
@@ -75,11 +212,12 @@ class home extends React.Component{
                     <i className="mdi mdi-tag-text-outline bg-warning text-white" />
                   </div>
                   <div>
-                    <h5 className="font-16">Average Price</h5>
+                    <h5 className="font-16">Users</h5>
                   </div>
-                  <h3 className="mt-4">447</h3>
+                  <h3 className="mt-4">{this.state.posts.length}</h3>
+                  
                   <div className="progress mt-4" style={{height: '4px'}}>
-                    <div className="progress-bar bg-warning" role="progressbar" style={{width: '68%'}} aria-valuenow={68} aria-valuemin={0} aria-valuemax={100} />
+                    <div className="progress-bar bg-warning" role="progressbar" style={{width: '100%'}} aria-valuenow={68} aria-valuemin={0} aria-valuemax={100} />
                   </div>
                   </div>
               </div>
@@ -91,11 +229,12 @@ class home extends React.Component{
                     <i className="mdi mdi-buffer bg-danger text-white" />
                   </div>
                   <div>
-                    <h5 className="font-16">Add to Card</h5>
+                    <h5 className="font-16">Deliverer</h5>
                   </div>
-                  <h3 className="mt-4">86%</h3>
+                  <h3 className="mt-4">{this.state.posts2.length}</h3>
+
                   <div className="progress mt-4" style={{height: '4px'}}>
-                    <div className="progress-bar bg-danger" role="progressbar" style={{width: '82%'}} aria-valuenow={82} aria-valuemin={0} aria-valuemax={100} />
+                    <div className="progress-bar bg-danger" role="progressbar" style={{width: '100%'}} aria-valuenow={82} aria-valuemin={0} aria-valuemax={100} />
                   </div>
                   </div>
               </div>
@@ -109,7 +248,7 @@ class home extends React.Component{
               <div className="card m-b-30">
                 <div className="card-body">
                   <h4 className="mt-0 header-title">Bar Chart</h4>
-                  <ul className="list-inline widget-chart m-t-20 m-b-15 text-center">
+                  {/* <ul className="list-inline widget-chart m-t-20 m-b-15 text-center">
                     <li className="list-inline-item">
                       <h5>3654</h5>
                       <p className="text-muted">Marketplace</p>
@@ -122,7 +261,23 @@ class home extends React.Component{
                       <h5>8462</h5>
                       <p className="text-muted">Last Month</p>
                     </li>
-                  </ul>
+                  </ul> */}
+
+<Bar
+          data={state1}
+          options={{
+            title:{
+              display:true,
+              text:'Average Rainfall per month',
+              fontSize:20
+            },
+            legend:{
+              display:true,
+              position:'right'
+            }
+          }}
+        />
+        
                   <div id="morris-bar-example" className="morris-charts" style={{height: '300px'}} />
                 </div>
               </div>
@@ -135,20 +290,21 @@ class home extends React.Component{
               <div className="card m-b-30">
                 <div className="card-body">
                   <h4 className="mt-0 header-title">Donut Chart</h4>
-                  <ul className="list-inline widget-chart m-t-20 m-b-15 text-center">
-                    <li className="list-inline-item">
-                      <h5>3654</h5>
-                      <p className="text-muted">Marketplace</p>
-                    </li>
-                    <li className="list-inline-item">
-                      <h5>954</h5>
-                      <p className="text-muted">Last week</p>
-                    </li>
-                    <li className="list-inline-item">
-                      <h5>8462</h5>
-                      <p className="text-muted">Last Month</p>
-                    </li>
-                  </ul>
+                  <Doughnut
+          data={state3}
+          options={{
+            title:{
+              display:true,
+              text:'Average Rainfall per month',
+              fontSize:20
+            },
+            legend:{
+              display:true,
+              position:'right'
+            }
+          }}
+        />
+
                   <div id="morris-donut-example" className="morris-charts" style={{height: '300px'}} />
                 </div>
               </div>
@@ -163,6 +319,20 @@ class home extends React.Component{
               <div className="card bg-info m-b-30">
                 <div className="card-body">
                   <h4 className="mt-0 text-white header-title">Line Chart</h4>
+                  <Line
+          data={state2}
+          options={{
+            title:{
+              display:true,
+              text:'Average Rainfall per month',
+              fontSize:20
+            },
+            legend:{
+              display:true,
+              position:'right'
+            }
+          }}
+        />
                   <div id="morris-line-example-info" className="morris-charts" style={{height: '300px'}} />
                 </div>
               </div>
@@ -173,123 +343,42 @@ class home extends React.Component{
             </div>
           </div>
           {/* end page-title */}
-        </div>
-        {/* container-fluid */}
-      </div>
-      {/* content */}
-
-
+          
 {/* Active Orders Starts */}
 <div className="row">
-            <div className="col-xl-12">
+             <div className="col-xl-12">
               <div className="card m-b-30">
                 <div className="card-body">
-                  <h4 className="mt-0 header-title mb-4">Active Deals</h4>
+                  <h4 className="mt-0 header-title mb-4">Products</h4>
                   <div className="table-responsive">
-                    <table className="table table-hover">
-                      <thead>
-                        <tr>
-                          <th scope="col">Name</th>
-                          <th scope="col">Status</th>
-                          <th scope="col">Amount</th>
-                          <th scope="col">Contact</th>
-                          <th scope="col">Location</th>
-                          <th scope="col" colSpan={2}>Date</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Philip Smead</td>
-                          <td><span className="badge badge-success">Delivered</span></td>
-                          <td>$9,420,000</td>
-                          <td>
-                            <div>
-                              <img src="assets/images/users/user-2.jpg" alt="" className="thumb-md rounded-circle mr-2" /> Philip Smead
-                            </div>
-                          </td>
-                          <td>Houston, TX 77074</td>
-                          <td>15/1/2018</td>
-                          <td>
-                            <div>
-                              <a href="#" className="btn btn-primary btn-sm">Edit</a>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Brent Shipley</td>
-                          <td><span className="badge badge-warning">Pending</span></td>
-                          <td>$3,120,000</td>
-                          <td>
-                            <div>
-                              <img src="assets/images/users/user-3.jpg" alt="" className="thumb-md rounded-circle mr-2" /> Brent Shipley
-                            </div>
-                          </td>
-                          <td>Oakland, CA 94612</td>
-                          <td>16/1/2019</td>
-                          <td>
-                            <div>
-                              <a href="#" className="btn btn-primary btn-sm">Edit</a>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Robert Sitton</td>
-                          <td><span className="badge badge-success">Delivered</span></td>
-                          <td>$6,360,000</td>
-                          <td>
-                            <div>
-                              <img src="assets/images/users/user-4.jpg" alt="" className="thumb-md rounded-circle mr-2" /> Robert Sitton
-                            </div>
-                          </td>
-                          <td>Hebron, ME 04238</td>
-                          <td>17/1/2019</td>
-                          <td>
-                            <div>
-                              <a href="#" className="btn btn-primary btn-sm">Edit</a>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Alberto Jackson</td>
-                          <td><span className="badge badge-danger">Cancel</span></td>
-                          <td>$5,200,000</td>
-                          <td>
-                            <div>
-                              <img src="assets/images/users/user-5.jpg" alt="" className="thumb-md rounded-circle mr-2" /> Alberto Jackson
-                            </div>
-                          </td>
-                          <td>Salinas, CA 93901</td>
-                          <td>18/1/2019</td>
-                          <td>
-                            <div>
-                              <a href="#" className="btn btn-primary btn-sm">Edit</a>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>David Sanchez</td>
-                          <td><span className="badge badge-success">Delivered</span></td>
-                          <td>$7,250,000</td>
-                          <td>
-                            <div>
-                              <img src="assets/images/users/user-6.jpg" alt="" className="thumb-md rounded-circle mr-2" /> David Sanchez
-                            </div>
-                          </td>
-                          <td>Cincinnati, OH 45202</td>
-                          <td>19/1/2019</td>
-                          <td>
-                            <div>
-                              <a href="#" className="btn btn-primary btn-sm">Edit</a>
-                            </div>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                  
+              <table
+                id='datatable'
+                className='table table-bordered'
+                style={{ borderCollapse: 'collapse', borderSpacing: 0, width: '100%' }}
+                >
+                <thead className="text-center">
+                <tr>
+                  <th>Title</th>
+                  <th>Price</th>
+                  <th>Category</th>
+                </tr>
+                </thead>
+                <tbody>{this.displayBlogPost(this.state.posts3)}</tbody>
+                </table>
+                
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        {/* container-fluid */}
+      
+      {/* content */}
+
+
+        </div>
 {/* Active Orders Ends */}
   <Footer/>
 

@@ -19,7 +19,7 @@ import { connect } from "react-redux";
 import Login from "./LoginModal";
 import { setSearchedData, showCondition } from "../store/action/index";
 import "../Styling/App.css";
-
+import axios from "axios"
 import firebase from "firebase/app";
 import firebaseAuth from "firebase/auth/dist/index.esm";
 import { ContactMail } from "@material-ui/icons";
@@ -34,6 +34,9 @@ class Header extends React.Component {
       condition: true,
       isLoggedin:localStorage.getItem("token"),
       userdetails:[],
+      newnotification: true,
+      userads:[],
+      items:""
     };
     this.componentDidMount()
     //alert(this.props.search_ads)
@@ -46,9 +49,63 @@ this.setState({userdetails:[]})
 
   }
 
+  async getdata(){
+    var apiBaseUrl = "http://localhost:5000/users/getNotification/";
+    var self = this;
+    let temper
+  
+  return await axios.get(apiBaseUrl+this.state.userdetails.id)
 
 
-  componentDidMount() {
+}
+
+  seting(inp){
+    console.log(inp,"in set")
+    this.setState({userads:inp.data.data},()=>{
+        console.log("yoyo",this.state.userads)
+        if(this.state.userads.length>0){
+          this.state.items=[]
+          this.state.userads.forEach(data=>{
+            this.state.items.push(<h5  onClick={() => this.iamClicked(data)} style={{cursor:"pointer",color:"white",borderBottomColor:"white",borderBottomStyle:"solid",borderBottomWidth:"0.2rem"}}>{data.msg}</h5>)
+          })
+          let temp123=this.state.userads.find(a=>a.seen==false)
+            if(temp123){
+              this.setState({
+                newnotification:true
+              })
+            }
+            else{
+              this.setState({
+                newnotification:false
+              })
+            }
+
+          
+          console.log(this.state.items,"fjjdejdieijdije2ijeijdije2dijij")
+        }
+       
+    })
+}
+
+// populate(){
+//   console.log("in populate")
+//   console.log(this.state.userads)
+//   this.state.items=[]
+//   this.state.userads.forEach(data=>{
+//     this.state.items.push(<p>{data.msg}</p>)
+//   })
+// }
+
+async iamClicked(inp){
+  console.log("im in clicked",inp)
+  localStorage.setItem("noti",JSON.stringify(inp))
+  this.props.history.push('/FindRider');
+}
+
+  async componentDidMount() {
+
+  
+
     if(localStorage.getItem('token')){
         var token= localStorage.getItem('token');
         if (token) 
@@ -58,14 +115,23 @@ this.setState({userdetails:[]})
       console.log(JSON.parse(jsonPayload),"daasdasdas")
       var tempor=JSON.parse(jsonPayload);
       console.log("f",tempor)
-        this.setState({userdetails:tempor},() => {
+        this.setState({userdetails:tempor},async () => {
             console.log(this.state.userdetails, 'dealersOverallTotal1');
+            console.log("here")
+        let tempor1=await this.getdata();
+        console.log("csac",tempor1);
+        var a=await this.seting(tempor1);
           });
         if(this.state.userdetails){
         console.log(this.state.userdetails,"user details");
+        
         }
     }
         }
+
+
+        
+    
 }
   sign_out = () => {
     // firebase.auth().signOut();
@@ -99,8 +165,21 @@ this.setState({userdetails:[]})
     console.log("Chal raha hai Dummy", this.props.search_ads);
   };
 
+   Notification = async () => { 
+    console.log("herllo here")
+   //await this.populate()
+    var x = document.getElementById("notificationbox")
+    if (x.style.display=="block"){
+      x.style.display="none"
+    }else{
+      x.style.display="block"
+    }
+  }
  
   render() {
+
+
+    
     this.props.showCondition(this.state.condition);
     console.log(
       "The current condition is now in HEADER:",
@@ -118,6 +197,8 @@ this.setState({userdetails:[]})
     {
       /* The actual thing from which I learnt how to develop a search functionality */
     }
+
+ 
 
     //For the search functionality
     //console.log("Do you know what this is",filteredAds)
@@ -490,27 +571,46 @@ this.setState({userdetails:[]})
                 ) : (
                   <span></span>
                 )}
+
               </li>
               <li className="nav-item">
                 {this.state.isLoggedin ? (
-                  <Link
-                    id="facart"
-                    className="inputDesktop"
-                    style={{
-                      fontSize: "15px",
-                      border: "1px solid black",
-                      borderRadius: "10px",
-                      backgroundColor: "white",
-                    }}
-                    to="/order"
-                  >
-                    (0)
-                    <FontAwesomeIcon
-                      className="text-dark"
-                      style={{ fontSize: "30px", marginTop: "1%" }}
-                      icon={faShoppingCart}
-                    />
-                  </Link>
+              <div
+                      className="dropdown-menu"
+                      aria-labelledby="dropdownMenu2"
+                    >
+                      <Link
+                        style={{ marginLeft: "0%", marginBottom: "5px" }}
+                        to="/sell"
+                        className="btn btn-warning btn-outline-info btn-block text-left"
+                        type="button"
+                      >
+                        <FontAwesomeIcon id="camico" icon={faCamera} />{" "}
+                        <span style={{ fontSize: "18px" }}> Start Selling</span>
+                      </Link>
+                      
+                    </div>
+                 
+                 ) : (
+                  <span></span>
+                )}
+                </li>
+              <li className="nav-item">
+                {this.state.isLoggedin ? (
+                <div>
+                {this.state.newnotification ? (
+                  
+                <div className="" onClick={() => this.Notification()}>
+                  <img style={{pointerEvents:"all",cursor:"pointer"}} src="https://uswat.edu.pk/wp-content/uploads/2019/10/image-11.png" height="50px" width="50px" onClick={() => this.Notification}  />
+                  <div style={{position:"absolute", height:"220px", width:"230px",maxHeight:"220px",overflowY:"scroll",display:"none",backgroundColor:"black",textAlign:"left"}} id="notificationbox"> 
+                  {this.state.items}
+                  
+                    </div>
+                 </div>
+                ) : (
+                  <img src="https://www.desientrepreneurs.com/wp-content/uploads/2018/04/push-notifications-icon.png" height="50px" width="50px"/>
+                )}
+                 </div>
                 ) : (
                   <span></span>
                 )}

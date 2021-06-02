@@ -32,8 +32,16 @@ const orderSchema = mongoose.Schema(
     isApproved:{
       type:Boolean,
       default:false
+    },
+    
+    date_of_delivery:{
+        type:Date
+    },
+    rider:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"Rider"
     }
-
+  
     
     
   },

@@ -14,6 +14,8 @@ const passport = require('passport');
 //const validateLoginInput = require("../../validation/login");
 //Load User Model
 const Order = require('../models/orderModel');
+const Rider = require("../models/riderModel");
+
 
 // var storage = multer.diskStorage({
 //     destination: function (req, file, cb) {
@@ -111,6 +113,49 @@ router.get('/getAllOrders', (req, res) => {
     
     .then(data=>{
       return res.json(data);
+    }).catch(err=>{
+      return res.json({
+        error:err
+      })
+    })
+
+  
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.post('/setRider/:id', (req, res) => {
+  try {
+    Order.find({
+      _id:req.params.id
+    })    
+    .then(data=>{
+      if(data){
+        Rider.find().then(rider=>{ 
+          console.log("here")
+         
+        data[0].date_of_delivery=new Date()
+        data[0].date_of_delivery.setDate(data[0].date_of_delivery.getDate() + 2)
+       let a= Math.floor(Math.random() * rider.length); 
+        data[0].rider=rider[a]._id
+        //console.log(data[0])
+        Order.findByIdAndUpdate({
+          _id:req.params.id
+        },data[0]).populate("rider").then(data=>{
+          console.log(data)
+          return res.json({
+            data:data
+          })
+        }).catch(err=>{
+          return res.json({
+            err:err
+          })
+        })
+      })
+      }
+      
+    
     }).catch(err=>{
       return res.json({
         error:err

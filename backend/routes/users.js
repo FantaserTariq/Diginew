@@ -13,6 +13,9 @@ const passport = require("passport");
 const User = require("../models/userModel");
 
 
+const Order = require("../models/orderModel")
+
+
 //@route    GET api/users/test
 //@desc     Tests users route
 //@access   Public
@@ -247,5 +250,67 @@ router.post("/update/:id", passport.authenticate("jwt", {
                 });
             })
     })
+
+    router.get("/getNotification/:id",
+    // passport.authenticate("jwt", {
+    //     session: false
+    // }),
+    (req, res) => {
+        User.findOne({ '_id': (req.params.id) })
+        .then(user=>{
+            if(user){
+                return res.json({
+                    data:user.Notification?user.Notification:[]
+                })
+               
+            }
+        })
+        .catch(err =>
+            res.status(404).json({
+                nouserfound: "no user found with that id"
+            })
+        );
+
+
+    });
+    router.post("/setNotification/:id",
+    // passport.authenticate("jwt", {
+    //     session: false
+    // }),
+
+    (req, res) => {
+        console.log(req.body)
+        
+        User.findOne({ '_id': (req.params.id) })
+        .then(user=>{
+            if(user){
+                user.Notification.push({
+                    msg:req.body.msg
+                })
+                User.findByIdAndUpdate({_id:req.params.id},user).then(data=>{
+                    Order.findById({
+                        _id:req.body.orderId
+                    }).then(data=>{
+                        if(data){
+                            data.isApproved=true
+                            Order.findByIdAndUpdate({_id:req.body.orderId},data)
+                        .then(data=>{
+                         return res.status(200).json({
+                        data:"updated successfully"
+                        })
+                    })                       
+                    }
+                    })
+                })
+            }
+
+        })
+        .catch(err =>
+            res.status(404).json({
+                nouserfound: "no user found with that id"
+            })
+        );
+
+    });
 
 module.exports = router;
