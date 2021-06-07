@@ -88,7 +88,7 @@ async componentDidMount() {
     {this.state.userads.map((value, index) => {
       if(value._id && value.imageUrl && value.user._id)
       
-      items.push(<tr><td key={index}><img height="100px" width="100px" src={value.imageUrl}></img></td><td key={index}>{value.user.firstName?value.user.firstName:"N/A"}</td><td key={index}>{value._id}</td><td> <button id="approveButton"  onClick={() => this.ApproveRequest(value)}>Approval</button></td><td>  <Link style={{display:"none"}} id="findriderButton"   to="/FindRider" >Approval</Link></td></tr>)
+      items.push(<tr><td key={index}><img height="100px" width="100px" src={value.imageUrl}></img></td><td key={index}>{value.user.firstName?value.user.firstName:"N/A"}</td><td key={index}>{value._id}</td><td> <button id="approveButton"  onClick={() => this.ApproveRequest(value)}>Approval</button></td><td>  <Link style={{display:"none"}} id="findriderButton"   to="/FindRider" >Find Rider</Link></td></tr>)
       
       
     })}
